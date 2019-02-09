@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ASP.NET_MVC_MajsterStrelby.Models;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace ASP.NET_MVC_MajsterStrelby.Controllers
 {
@@ -86,7 +89,7 @@ namespace ASP.NET_MVC_MajsterStrelby.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Prihlásenie neúspešne.");
                     return View(model);
             }
         }
@@ -129,7 +132,7 @@ namespace ASP.NET_MVC_MajsterStrelby.Controllers
                     return View("Lockout");
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid code.");
+                    ModelState.AddModelError("", "Nesprávny kód.");
                     return View(model);
             }
         }
@@ -156,12 +159,20 @@ namespace ASP.NET_MVC_MajsterStrelby.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
+                    //Vlozenie hraca aj do hernej databazy 
+                    string conectionString = ConfigurationManager.ConnectionStrings["DefaultSqlConnection"].ConnectionString;
+                    var querry = "INSERT INTO info_hrac (meno) VALUES('" + user.UserName + "')" ;
                     
-                    //
-                    //
-                    //PRIDANIE UZIVATELA DO DATABAZY
-                    //
-                    //
+                    using (var connection = new SqlConnection(conectionString))
+                    {
+                        connection.Open();
+                        using (var cmd = new SqlCommand(querry, connection))
+                        {
+                            cmd.ExecuteNonQuery();
+                        }
+                        connection.Close();
+                    }
 
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
