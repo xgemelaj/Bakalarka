@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
+﻿using ASP.NET_MVC_MajsterStrelby.Models;
 using System.Web.Mvc;
 
 namespace ASP.NET_MVC_MajsterStrelby.Controllers
@@ -15,23 +9,10 @@ namespace ASP.NET_MVC_MajsterStrelby.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            string conectionString = ConfigurationManager.ConnectionStrings["DefaultSqlConnection"].ConnectionString;
-            var querry = " SELECT TOP 1 prve_slovo FROM synonimicke_vztahy  ORDER BY NEWID()";
-            DataTable dT = new DataTable();
+            GameWordsModel gameWords = new GameWordsModel();
+            gameWords.FillModel();
 
-            using (var connection = new SqlConnection(conectionString))
-            {
-                using (SqlDataAdapter da = new SqlDataAdapter(querry, connection))
-                {
-                    var commandBuilder = new SqlCommandBuilder(da);
-                    da.Fill(dT);
-                }
-            }
-
-            string taskWord = dT.Rows[0][0].ToString();
-           
-         
-            return View(model: taskWord);
+            return View(gameWords);
         }
 
         // GET: Game/Create
