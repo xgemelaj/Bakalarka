@@ -10,8 +10,13 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
 {
     public class GameWordsModel
     {
-        private string _taskWord;
-        private List<string> _possibleWords;
+        //
+        //
+        //PREKOPAT LEBO JE TO AJ TAK PUBLIC
+        //
+        //
+        public string _taskWord { get; set; }
+        public List<string> _possibleWords { get; set; }
 
         public string GetTaskWord()
         {
@@ -37,6 +42,8 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
 
         public GameWordsModel(string taskWord, List<string> possibleWords)
         {
+            //this._taskWord = taskWord;
+            //this._possibleWords = possibleWords;
             this.SetTaskWord(taskWord);
             this.SetPossibleWords(possibleWords);
         }
@@ -45,6 +52,7 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
         {
             this.GenerateTaskWordFromDatabase();
             this.GeneratePossibleWordsFromDatabase(this.GetTaskWord());
+            //this.GeneratePossibleWordsFromDatabase(this._taskWord);
         }
 
         private void GenerateTaskWordFromDatabase()

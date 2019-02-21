@@ -27,6 +27,7 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
         public PlayersViewModel(List<Player> players)
         {
             this.SetPlayers(players);
+            //this._players = players;
         }
 
         public void FillPlayersFromDatabase()

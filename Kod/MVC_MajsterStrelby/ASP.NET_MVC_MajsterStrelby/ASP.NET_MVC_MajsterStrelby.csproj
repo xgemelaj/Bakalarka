@@ -185,6 +185,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\EndRoundWordsModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Models\PlayersViewModel.cs" />
@@ -280,6 +281,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Game\index.cshtml" />
     <Content Include="Views\Leaderboard\Index.cshtml" />
+    <Content Include="Views\Game\ShowPoints.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
