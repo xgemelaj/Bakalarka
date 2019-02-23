@@ -10,49 +10,44 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
 {
     public class GameWordsModel
     {
-        //
-        //
-        //PREKOPAT LEBO JE TO AJ TAK PUBLIC
-        //
-        //
         public string _taskWord { get; set; }
         public List<string> _possibleWords { get; set; }
 
-        public string GetTaskWord()
-        {
-            return _taskWord;
-        }
+        //public string GetTaskWord()
+        //{
+        //    return _taskWord;
+        //}
 
-        public void SetTaskWord(string taskword)
-        {
-            _taskWord = taskword;
-        }
+        //public void SetTaskWord(string taskword)
+        //{
+        //    _taskWord = taskword;
+        //}
 
-        public List<string> GetPossibleWords()
-        {
-            return _possibleWords;
-        }
+        //public List<string> GetPossibleWords()
+        //{
+        //    return _possibleWords;
+        //}
 
-        public void SetPossibleWords(List<string> possibleWords)
-        {
-            _possibleWords = possibleWords;
-        }
+        //public void SetPossibleWords(List<string> possibleWords)
+        //{
+        //    _possibleWords = possibleWords;
+        //}
 
         public GameWordsModel() { }
 
         public GameWordsModel(string taskWord, List<string> possibleWords)
         {
-            //this._taskWord = taskWord;
-            //this._possibleWords = possibleWords;
-            this.SetTaskWord(taskWord);
-            this.SetPossibleWords(possibleWords);
+            this._taskWord = taskWord;
+            this._possibleWords = possibleWords;
+            //this.SetTaskWord(taskWord);
+            //this.SetPossibleWords(possibleWords);
         }
 
         public void FillModel()
         {
             this.GenerateTaskWordFromDatabase();
-            this.GeneratePossibleWordsFromDatabase(this.GetTaskWord());
-            //this.GeneratePossibleWordsFromDatabase(this._taskWord);
+            //this.GeneratePossibleWordsFromDatabase(this.GetTaskWord());
+            this.GeneratePossibleWordsFromDatabase(this._taskWord);
         }
 
         private void GenerateTaskWordFromDatabase()
@@ -71,7 +66,8 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
             }
 
             //Random generator to get task word for next round 
-            this.SetTaskWord(dT.Rows[0][0].ToString());
+            //this.SetTaskWord(dT.Rows[0][0].ToString());
+            this._taskWord = dT.Rows[0][0].ToString();
         }
 
         private void GeneratePossibleWordsFromDatabase(string taskWord)
@@ -132,7 +128,8 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
             }
 
             //Set possible words to model
-            this.SetPossibleWords(possibleWords);
+            //this.SetPossibleWords(possibleWords);
+            this._possibleWords = possibleWords;
         }
     }
 }

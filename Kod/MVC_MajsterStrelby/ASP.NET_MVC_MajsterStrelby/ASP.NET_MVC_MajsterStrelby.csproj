@@ -281,7 +281,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Game\index.cshtml" />
     <Content Include="Views\Leaderboard\Index.cshtml" />
-    <Content Include="Views\Game\ShowPoints.cshtml" />
+    <Content Include="Views\Game\Result.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

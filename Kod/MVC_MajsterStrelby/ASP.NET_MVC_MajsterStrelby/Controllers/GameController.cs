@@ -15,12 +15,6 @@ namespace ASP.NET_MVC_MajsterStrelby.Controllers
             return View(gameWords);
         }
 
-        //// GET: Game/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
-
         // POST: Game/SendData
         [HttpPost]
         public ActionResult SendData(EndRoundWordsModels wordModel)
@@ -48,11 +42,11 @@ namespace ASP.NET_MVC_MajsterStrelby.Controllers
             }
         }
 
-        // GET: Game/ShowPoints
+        // GET: Game/Result/85
         [Authorize]
-        public ActionResult ShowPoints()
+        public ActionResult Result(int id)
         {
-            return View();
+            return View(id);
         }
 
         //// GET: Game/Edit/5

@@ -81,7 +81,7 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
             finalAmount = checkForCorrectness(maximumForOneChoice, finalAmount);
 
             //Calculate change of points due to quotient = priority choose
-            double helpAmount = finalAmount / (1 - 0.05 * (counter));
+            double helpAmount = finalAmount / (1 + 0.05 * (counter));
             finalAmount = (int)helpAmount;
  
             //
@@ -122,6 +122,7 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
 
                 int actualPlayerId = Int32.Parse(dT.Rows[0][0].ToString());
 
+                //Insert into database synonymous relationships whit distances
                 foreach (var choosenWord in choosenWords)
                 {
                     querry = "INSERT INTO zbieranie_ohodnoteni (id_hrac, prve_slovo, druhe_slovo, vzdialenost, body) VALUES(@IdPlayer, @FirstWord, @SecondWord, @Distance, @Points)";
@@ -149,11 +150,30 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
                     allWords.RemoveAt(allWords.IndexOf(choosenWord));
                 }
 
-                //
-                //
-                //To do > Insert to database words which werent choosen and get them value distance -1
-                //
-                //
+                //Insert to database words that werent choosen and give tham distance value -1
+                foreach(var word in allWords)
+                {
+                    querry = "INSERT INTO zbieranie_ohodnoteni (id_hrac, prve_slovo, druhe_slovo, vzdialenost, body) VALUES(@IdPlayer, @FirstWord, @SecondWord, @Distance, @Points)";
+
+                    using (var cmd = new SqlCommand(querry, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@IdPlayer", actualPlayerId);
+                        if (string.Compare(model._taskWord, word) == -1)
+                        {
+                            cmd.Parameters.AddWithValue("@FirstWord", model._taskWord);
+                            cmd.Parameters.AddWithValue("@SecondWord", word);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@FirstWord", word);
+                            cmd.Parameters.AddWithValue("@SecondWord", model._taskWord);
+                        }
+                        cmd.Parameters.AddWithValue("@Distance", counter + 1);
+                        cmd.Parameters.AddWithValue("@Points", -1);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
 
                 connection.Close();
             }

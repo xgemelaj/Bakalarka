@@ -4,21 +4,21 @@
 }
 
 <div class="jumbotron">
-    <h2 id="taskWord" class="text-center">@Model.GetTaskWord()</h2>
+    <h2 id="taskWord" class="text-center">@Model._taskWord</h2>
     <h4 class="text-center">3:25</h4>
 </div>
 
 @using (Html.BeginForm("SendData", "Game", FormMethod.Post))
 {
     <ul>
-        @foreach (var possibleWord in Model.GetPossibleWords())
+        @foreach (var possibleWord in Model._possibleWords)
         {
             <li>
                 <button type="button" class="btn btn-primary btn-lg" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
             </li>
         }
 
-        <button type="button" class="btn btn-primary btn-lg" onclick="return sendData()" value=@Model.GetTaskWord() >"Odoslať odpoveď"</button>
+        <button type="button" class="btn btn-primary btn-lg" onclick="return sendData()">"Odoslať odpoveď"</button>
 
     </ul>
 
@@ -50,7 +50,7 @@
                     alert(response.Success);
                     alert(response.Message);
                     console.log(response);
-                    window.location.href = '@Url.Action("ShowPoints", "Game")';
+                    window.location.href = '@Url.Action("Result", "Game")/' + response.Message;
                 },
                 failure: function (response) {
                     alert(response.Success);
@@ -61,7 +61,6 @@
 
             return true;
         }
-
     </script>
 }
 

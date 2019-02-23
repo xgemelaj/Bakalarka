@@ -1,0 +1,13 @@
+﻿@model int
+@{
+    ViewBag.Title = "Result";
+}
+
+<div class="jumbotron">
+    <h3 class="text-center">Získal si</h3>
+    <h1 class="text-center">@Model bodov</h1>
+    <h3 class="text-center">Gratulujem</h3>
+    @Html.ActionLink("Chceš hrať ďalšie kolo?", "Index", "Game")
+</div>
+
+
