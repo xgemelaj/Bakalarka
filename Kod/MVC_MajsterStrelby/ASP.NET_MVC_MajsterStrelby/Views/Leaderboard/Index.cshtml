@@ -1,15 +1,19 @@
 ﻿@model ASP.NET_MVC_MajsterStrelby.Models.PlayersViewModel
 @{
-    ViewBag.Title = "Rebríček";
+    ViewBag.Title = "Leaderboard";
 }
 <div class="jumbotron">
-    <h2>Leaderboard</h2>
+    <h2>Rebríček</h2>
     <ul>
         @foreach (var player in Model.GetPlayers())
         {
             <li>
-                @player._name , @player._points , @player._resolved
+                @player._name , @player._level , @player._resolved
             </li>
         }
+        <p></p>
+        <li>@Model.GetActualPlayer()._name , @Model.GetActualPlayer()._level, @Model.GetActualPlayer()._resolved</li>
     </ul>
+       
+
 </div>

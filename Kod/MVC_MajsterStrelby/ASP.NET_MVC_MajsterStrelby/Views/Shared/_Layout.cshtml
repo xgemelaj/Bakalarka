@@ -21,7 +21,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Nová hra", "Index", "Game")</li>
+                    <li>
+                        @Html.ActionLink("Nová hra", "Index", "Game")
+                    </li>
                     <li>@Html.ActionLink("Rebríček", "Index", "Leaderboard")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")

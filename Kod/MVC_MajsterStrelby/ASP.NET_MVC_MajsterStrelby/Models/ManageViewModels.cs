@@ -12,6 +12,13 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+        public Player ActualPlayerInformation { get; set; }
+    }
+
+    public class SkillTreeViewModel
+    {
+        public Player ActualPlayerInformation { get; set; }
+        public int PossibleUpgrades { get; set; }
     }
 
     public class ManageLoginsViewModel

@@ -64,15 +64,56 @@ namespace ASP.NET_MVC_MajsterStrelby.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+            var userName = User.Identity.Name;
+            //Get information about actual logged player
+            var player = new Player();
+            player.FillInformation(userName);
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                ActualPlayerInformation = player
             };
             return View(model);
+        }
+
+        //
+        // GET: /Manage/SkillTree
+        public ActionResult SkillTree()
+        {
+            var userName = User.Identity.Name;
+            var player = new Player();
+            player.FillInformation(userName);
+
+            SkillTreeViewModel viewModel = new SkillTreeViewModel();
+            viewModel.ActualPlayerInformation = player;
+            viewModel.PossibleUpgrades = player.CountPossibleSkillUpgrades();
+
+            return View(viewModel);
+        }
+
+        //
+        // POST: /Manage/UpgradeSkill
+        public ActionResult UpgradeSkill(string upgradeSkillButton)
+        {
+            var userName = User.Identity.Name;
+            var player = new Player();
+            player.FillInformation(userName);
+            player.UpgradeSkill(upgradeSkillButton);
+
+            TempData["message"] = "Success";
+            return RedirectToAction("SkillTree");
+        }
+
+        //
+        // GET: /Manage/Achievements
+        public ActionResult Achievements()
+        {
+            return View();
         }
 
         //

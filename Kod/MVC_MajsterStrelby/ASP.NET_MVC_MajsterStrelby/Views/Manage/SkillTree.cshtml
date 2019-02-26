@@ -1,0 +1,42 @@
+﻿@model ASP.NET_MVC_MajsterStrelby.Models.SkillTreeViewModel
+@{
+    /**/
+
+    ViewBag.Title = "SkillTree";
+    var skillLevels = Model.ActualPlayerInformation._skills;
+    string[] disable = new string[4];
+    for (int i = 0; i < 4; i++)
+    {
+        disable[i] = (Model.PossibleUpgrades > 0 && skillLevels[i] < 5) ? "active" : "disabled";
+    }
+}
+
+<h2>Strom Zručností</h2>
+<p></p>
+<p>Tvoj level je @Model.ActualPlayerInformation._level.</p>
+<p>Počet nepridelených bodov: @Model.PossibleUpgrades</p>
+
+@using (Html.BeginForm("UpgradeSkill", "Manage", FormMethod.Post))
+{
+    <dl class="dl-horizontal">
+        <dt>Sila: @skillLevels[0] </dt>
+        <dd><button type="submit" name="upgradeSkillButton" class="btn btn-primary btn-md " + @disable[0] value=0>Vylepšiť</button></dd>
+
+        <dt>Rozhľad: @skillLevels[1] </dt>
+        <dd><button type="submit" name="upgradeSkillButton" class="btn btn-primary btn-md " + @disable[1] value=1>Vylepšiť</button></dd>
+
+        <dt>Výdrž: @skillLevels[2] </dt>
+        <dd><button type="submit" name="upgradeSkillButton" class="btn btn-primary btn-md " + @disable[2] value=2>Vylepšiť</button></dd>
+
+        <dt>Bystrosť: @skillLevels[3] </dt>
+        <dd><button type="submit" name="upgradeSkillButton" class="btn btn-primary btn-md " + @disable[3] value=3>Vylepšiť</button></dd>
+    </dl>
+}
+
+@if (@TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        <strong>Gratulujem!</strong> Úroveň zručnosti zvýšená.
+    </div>
+
+}

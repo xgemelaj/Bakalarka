@@ -17,6 +17,10 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
 
         public int GetPoints()
         {
+            //Check if player choose something, and if not send null as the sum of points for his choices
+            if (this.choosenWords == null)
+                return 0;
+
             //Get points for each selected pairs of words
             int[] points = this.CalculatePoints();
             int sum = points.Sum();
@@ -83,12 +87,9 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
             //Calculate change of points due to quotient = priority choose
             double helpAmount = finalAmount / (1 + 0.05 * (counter));
             finalAmount = (int)helpAmount;
- 
-            //
-            //
-            //DORATAT BONUS ZA SKILL
-            //
-            //
+
+            //Add bonus for fourth skill - Smartness
+            finalAmount += (this.model._actualPlayer._skills[3]-1) * 5;
 
             return finalAmount;
         }
@@ -168,8 +169,8 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
                             cmd.Parameters.AddWithValue("@FirstWord", word);
                             cmd.Parameters.AddWithValue("@SecondWord", model._taskWord);
                         }
-                        cmd.Parameters.AddWithValue("@Distance", counter + 1);
-                        cmd.Parameters.AddWithValue("@Points", -1);
+                        cmd.Parameters.AddWithValue("@Distance", -1);
+                        cmd.Parameters.AddWithValue("@Points", 0);
 
                         cmd.ExecuteNonQuery();
                     }

@@ -12,6 +12,7 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
     {
         public string _taskWord { get; set; }
         public List<string> _possibleWords { get; set; }
+        public Player _actualPlayer { get; set; }
 
         //public string GetTaskWord()
         //{
@@ -43,11 +44,15 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
             //this.SetPossibleWords(possibleWords);
         }
 
-        public void FillModel()
+        public void FillModel(string userName)
         {
+            //Get information about actually logged in player
+            this._actualPlayer = new Player();
+            this._actualPlayer.FillInformation(userName);
+
             this.GenerateTaskWordFromDatabase();
-            //this.GeneratePossibleWordsFromDatabase(this.GetTaskWord());
-            this.GeneratePossibleWordsFromDatabase(this._taskWord);
+            this.GeneratePossibleWordsFromDatabase();
+
         }
 
         private void GenerateTaskWordFromDatabase()
@@ -70,17 +75,20 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
             this._taskWord = dT.Rows[0][0].ToString();
         }
 
-        private void GeneratePossibleWordsFromDatabase(string taskWord)
+        private void GeneratePossibleWordsFromDatabase()
         {
+            //Calculate amount of words which need to be generate. This is affected by second skill - Visibility and base component - 5.
+            int numberOfPossibleWords = 5 + (this._actualPlayer._skills[1] - 1) * 3;
+
             string conectionString = ConfigurationManager.ConnectionStrings["DefaultSqlConnection"].ConnectionString;
-            string querry = "SELECT TOP 5 prve_slovo,druhe_slovo FROM synonimicke_vztahy WHERE prve_slovo LIKE @TaskWord OR prve_slovo LIKE @TaskWord ORDER BY NEWID()";
+            string querry = "SELECT TOP " + numberOfPossibleWords + " prve_slovo,druhe_slovo FROM synonimicke_vztahy WHERE prve_slovo LIKE @TaskWord OR prve_slovo LIKE @TaskWord ORDER BY NEWID()";
             DataTable dT = new DataTable();
 
             using (var connection = new SqlConnection(conectionString))
             {
                 using (SqlDataAdapter da = new SqlDataAdapter(querry, connection))
                 {
-                    da.SelectCommand.Parameters.AddWithValue("@TaskWord", taskWord);
+                    da.SelectCommand.Parameters.AddWithValue("@TaskWord", this._taskWord);
                     var commandBuilder = new SqlCommandBuilder(da);
                     da.Fill(dT);
                 }
@@ -89,12 +97,12 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
             //Create and fill possible words to list
             var possibleWords = new List<string>();
             for (int i = 0; i < dT.Rows.Count; i++)
-                possibleWords.Add(dT.Rows[i][0].ToString() == taskWord ? dT.Rows[i][1].ToString() : dT.Rows[i][0].ToString());
+                possibleWords.Add(dT.Rows[i][0].ToString() == this._taskWord ? dT.Rows[i][1].ToString() : dT.Rows[i][0].ToString());
 
             //If not enough words, get random words different to taskword form database
-            if (possibleWords.Count < 5)
+            if (possibleWords.Count < numberOfPossibleWords)
             {
-                var amount = 5 - possibleWords.Count;
+                var amount = numberOfPossibleWords - possibleWords.Count;
                 var condition = "(";
                 foreach (var item in possibleWords)
                 {
@@ -112,7 +120,7 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
                 {
                     using (SqlDataAdapter da = new SqlDataAdapter(querry, connection))
                     {
-                        da.SelectCommand.Parameters.AddWithValue("@TaskWord", taskWord);
+                        da.SelectCommand.Parameters.AddWithValue("@TaskWord", this._taskWord);
                         var commandBuilder = new SqlCommandBuilder(da);
                         da.Fill(dT);
                     }
@@ -120,9 +128,9 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
 
                 for (int i = 0; i < dT.Rows.Count; i++)
                 {
-                    if (possibleWords.Count < 5 && !possibleWords.Contains(dT.Rows[i][0]))
+                    if (possibleWords.Count < numberOfPossibleWords && !possibleWords.Contains(dT.Rows[i][0]))
                         possibleWords.Add(dT.Rows[i][0].ToString());
-                    if (possibleWords.Count < 5 && !possibleWords.Contains(dT.Rows[i][1]))
+                    if (possibleWords.Count < numberOfPossibleWords && !possibleWords.Contains(dT.Rows[i][1]))
                         possibleWords.Add(dT.Rows[i][1].ToString());
                 }
             }

@@ -199,6 +199,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Background.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
@@ -282,6 +283,8 @@
     <Content Include="Views\Game\index.cshtml" />
     <Content Include="Views\Leaderboard\Index.cshtml" />
     <Content Include="Views\Game\Result.cshtml" />
+    <Content Include="Views\Manage\SkillTree.cshtml" />
+    <Content Include="Views\Manage\Achievements.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

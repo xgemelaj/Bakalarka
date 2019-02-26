@@ -10,12 +10,13 @@ namespace ASP.NET_MVC_MajsterStrelby.Controllers
         public ActionResult Index()
         {
             GameWordsModel gameWords = new GameWordsModel();
-            gameWords.FillModel();
+            gameWords.FillModel(User.Identity.Name);
 
             return View(gameWords);
         }
 
         // POST: Game/SendData
+        [Authorize]
         [HttpPost]
         public ActionResult SendData(EndRoundWordsModels wordModel)
         {
@@ -25,12 +26,6 @@ namespace ASP.NET_MVC_MajsterStrelby.Controllers
                 wordModel.userName = User.Identity.Name;
                 //Function to calculate points for plazers answers
                 finalPoints = wordModel.GetPoints();
-
-                //
-                //
-                //Return points to new scene where will be showned points and possibility to play next game
-                //
-                //
 
                 var result = new { Success = "True", Message = finalPoints };
                 return Json(result, JsonRequestBehavior.AllowGet);
