@@ -9,33 +9,65 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Majster Streľby", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    <div class="cover-container d-flex h-100 mx-auto flex-column">
+        @* From Bootstrap 3.4.1 
+            <div class="navbar navbar-inverse navbar-fixed-top mb-auto">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Majster Streľby", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            @Html.ActionLink("Nová hra", "Index", "Game")
+                        </li>
+                        <li>@Html.ActionLink("Rebríček", "Index", "Leaderboard")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>
-                        @Html.ActionLink("Nová hra", "Index", "Game")
+        </div>*@
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-auto">
+            <a class="navbar-brand" href="@Url.Action("Index", "Home")">Majster Streľby</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Game")" class="elements">
+                            <span>Nová hra</span>
+                        </a>
                     </li>
-                    <li>@Html.ActionLink("Rebríček", "Index", "Leaderboard")</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Leaderboard")" class="elements">
+                            <span>Rebríček</span>
+                        </a>
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
+        </nav>
+
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+
+        <footer class="mt-auto">
+            @*<p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>*@
+            @*<br /> Cliparty zo stránky <a href="http://clipart-library.com">Clipart-Library</a>
+            <br /> Obrázok v pozadí zo stránky <a href="https://es.pngtree.com">Png-Tree</a>*@
+            <br /> Vytvorené s použitím <a href="http://clipart-library.com">Bootstrapu</a>, <a href="http://clipart-library.com">Clipart-Library</a> a <a href="https://es.pngtree.com">Png-Tree</a>.
         </footer>
+
     </div>
 
     @Scripts.Render("~/bundles/jquery")

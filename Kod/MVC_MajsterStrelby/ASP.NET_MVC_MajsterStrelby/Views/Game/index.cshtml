@@ -2,95 +2,99 @@
 @{
     ViewBag.Title = "Game";
     //Calculate time which depends on thirth skill - Stamina and base component - 60 seconds
-    var endTime = DateTime.UtcNow.AddSeconds((Model._actualPlayer._skills[2]-1)*5 + 60);
+    var endTime = DateTime.UtcNow.AddSeconds((Model._actualPlayer._skills[2] - 1) * 5 + 60);
     var timeRemaining = TimeSpan.FromTicks(endTime.Ticks - DateTime.UtcNow.Ticks).TotalSeconds;
     //Calculate number of attempts which player have which dpends on first skill - Power and base component - 3 attempts
     var numberOfShots = 3 + (Model._actualPlayer._skills[0] / 2);
+    int[] leftShift = new int[] { 0, 20, 40, 50, 80, 0, 20, 40, 50, 80 };
+    int[] downShift = new int[] { 80, 80, 80, 80, 80, 50, 50, 50, 50, 50 };
+    char counter = 'A';
 }
 
-<div class="jumbotron">
+<div class="div_absolute">
     <h2 id="taskWord" class="text-center">@Model._taskWord</h2>
     <h4 id="remainingSeconds" class="text-center">@timeRemaining</h4>
     <h4 id="remainingArrows" class="text-center">@numberOfShots</h4>
+    <button type="button" class="btn btn-secondary btn-lg centerButton" onclick="return sendData()">"Odoslať odpoveď"</button>
 </div>
 
 @using (Html.BeginForm("SendData", "Game", FormMethod.Post))
 {
-    <ul>
-        @foreach (var possibleWord in Model._possibleWords)
-        {
-            <li>
-                <button type="button" class="btn btn-primary btn-lg" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
-            </li>
-        }
-
-        <button type="button" class="btn btn-primary btn-lg" onclick="return sendData()">"Odoslať odpoveď"</button>
-
-    </ul>
+    <div class="options">
+        
+            @foreach (var possibleWord in Model._possibleWords)
+            {
+            <div class="@(counter++)option">
+                <img src="~/Images/Giraffe_sign.png" class="giraffe">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+            </div>
+            }
+        
+    </div>
 
     <script>
-        //var taskword = document.getElementById('taskWord');
-        var words = [];
-        var model = @Html.Raw(Json.Encode(Model));
-        var counter = 0;
-        var secRemaining = @timeRemaining;
-        var arrowsRemaining = @numberOfShots;
+    //var taskword = document.getElementById('taskWord');
+    var words = [];
+    var model = @Html.Raw(Json.Encode(Model));
+    var counter = 0;
+    var secRemaining = @timeRemaining;
+    var arrowsRemaining = @numberOfShots;
 
-        function startTick() {
-            var _ticks = setInterval(function () {
-                if (secRemaining > 0) {
-                    secRemaining -= 1;
-                    document.getElementById('remainingSeconds').innerText = secRemaining;
-                }
-                else {
-                    sendData();
-                    clearInterval(_tick);
-                }
-            }, 1000);
-        }
-        startTick();
-
-
-        function onClickDisabled() {
-            if (arrowsRemaining > 0) {
-                arrowsRemaining -= 1;
-                document.getElementById('remainingArrows').innerText = arrowsRemaining;
-                this.disabled = 'true';
-                console.log(this);
-                console.log(words);
-                words[counter++] = this.value;
-                return true;
+    function startTick() {
+        var _ticks = setInterval(function () {
+            if (secRemaining > 0) {
+                secRemaining -= 1;
+                document.getElementById('remainingSeconds').innerText = secRemaining;
             }
-            else 
-                alert("Už niesu ďalšie śípy");
-            
-        }
+            else {
+                sendData();
+                clearInterval(_tick);
+            }
+        }, 1000);
+    }
+    startTick();
 
-        function sendData() {
-            $.ajax({
-                contentType: 'application/json',
-                dataType: 'json',
-                type: 'POST',
-                url: "@Url.Action("SendData","Game")",
-                data: JSON.stringify({
-                    choosenWords: words,
-                    model: model
-                }),
-                success: function (response) {
-                    //alert(response.Success);
-                    //alert(response.Message);
-                    console.log(response);
-                    window.location.href = '@Url.Action("Result", "Game")/' + response.Message;
-                },
-                failure: function (response) {
-                    alert(response.failure);
-                    //alert(response.Message);
-                    console.log(response);
-                }
-            });
 
+    function onClickDisabled() {
+        if (arrowsRemaining > 0) {
+            arrowsRemaining -= 1;
+            document.getElementById('remainingArrows').innerText = arrowsRemaining;
+            this.disabled = 'true';
+            console.log(this);
+            console.log(words);
+            words[counter++] = this.value;
             return true;
         }
+        else
+            alert("Už niesu ďalšie śípy");
+
+    }
+
+    function sendData() {
+        $.ajax({
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'POST',
+            url: "@Url.Action("SendData","Game")",
+            data: JSON.stringify({
+                choosenWords: words,
+                model: model
+            }),
+            success: function (response) {
+                //alert(response.Success);
+                //alert(response.Message);
+                console.log(response);
+                window.location.href = '@Url.Action("Result", "Game")/' + response.Message;
+            },
+            failure: function (response) {
+                alert(response.failure);
+                //alert(response.Message);
+                console.log(response);
+            }
+        });
+
+        return true;
+    }
     </script>
 }
 

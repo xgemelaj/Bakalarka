@@ -1,19 +1,37 @@
 ﻿@model ASP.NET_MVC_MajsterStrelby.Models.PlayersViewModel
 @{
     ViewBag.Title = "Leaderboard";
+    int counter = 1;
 }
-<div class="jumbotron">
+<div class="jumbotron jumbotron-center">
     <h2>Rebríček</h2>
-    <ul>
+    <div class="row leaderboard_table">
         @foreach (var player in Model.GetPlayers())
         {
-            <li>
-                @player._name , @player._level , @player._resolved
-            </li>
+            <div class="col-md-2">
+                @(counter++)
+            </div>
+            <div class="col-md-4">
+                @player._name
+            </div>
+            <div class="col-md-3">
+                @player._level
+            </div>
+            <div class="col-md-3">
+                @player._resolved
+            </div>
         }
-        <p></p>
-        <li>@Model.GetActualPlayer()._name , @Model.GetActualPlayer()._level, @Model.GetActualPlayer()._resolved</li>
-    </ul>
-       
 
+        <div class="col-md-2 spaceUpper">
+        </div>
+        <div class="col-md-4 spaceUpper">
+            @Model.GetActualPlayer()._name
+        </div>
+        <div class="col-md-3 spaceUpper">
+            @Model.GetActualPlayer()._level
+        </div>
+        <div class="col-md-3 spaceUpper">
+            @Model.GetActualPlayer()._resolved
+        </div>
+    </div>
 </div>
