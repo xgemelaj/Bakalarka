@@ -69,81 +69,84 @@ textarea {
 
 .Aoption {
     position: absolute;
-    left: 0%;
+    left: 20%;
     top: 50%;
 }
 
 .Boption {
     position: absolute;
-    left: 20%;
+    left: 40%;
     top: 50%;
 }
 
 .Coption {
     position: absolute;
-    left: 40%;
-    top: 50%;
-}
-
-.Doption {
-    position: absolute;
-    left: 60%;
-    top: 50%;
-}
-
-.Eoption {
-    position: absolute;
-    left: 80%;
-    top: 50%;
-}
-
-.Foption {
-    position: absolute;
-    left: 10%;
-    top: 90%;
-}
-
-.Goption {
-    position: absolute;
     left: 30%;
     top: 90%;
 }
 
-.Hoption {
+.Doption {
     position: absolute;
-    left: 50%;
-    top: 90%;
+    left: 80%;
+    top: 10%;
 }
 
-.Ioption {
+.Eoption {
     position: absolute;
     left: 70%;
     top: 90%;
 }
 
-.Joption {
+.Foption {
     position: absolute;
     left: 90%;
     top: 90%;
 }
 
-.Koption {
+.Goption {
     position: absolute;
     left: 10%;
-    top: 75%;
+    top: 20%;
 }
 
-/*ESTE NEDOROBENE ODTIALTO / NIESU UNIQUE PRE KAZDY NOVY PRIPAD*/
+.Hoption {
+    position: absolute;
+    left: 0%;
+    top: 50%;
+}
+
+.Ioption {
+    position: absolute;
+    left: 10%;
+    top: 90%;
+}
+
+.Joption {
+    position: absolute;
+    left: 50%;
+    top: 90%;
+}
+
+.Koption {
+    position: absolute;
+    left: 80%;
+    top: 50%;
+}
+
 .Loption {
     position: absolute;
-    left: 10%;
-    top: 75%;
+    left: 60%;
+    top: 50%;
 }
+
 .Moption {
     position: absolute;
-    left: 10%;
-    top: 75%;
+    left: 30%;
+    top: 10%;
 }
+
+/*ESTE NEDOROBENE ODTIALTO / NIESU UNIQUE PRE KAZDY NOVY PRIPAD // 13 */
+
 .Noption {
     position: absolute;
     left: 10%;
@@ -154,29 +157,36 @@ textarea {
     left: 10%;
     top: 75%;
 }
-.Poption {
-    position: absolute;
-    left: 10%;
-    top: 75%;
-}
-.Qoption {
-    position: absolute;
-    left: 10%;
-    top: 75%;
-}
-
-
 
 .giraffe {
-    height: 120px;
-    width: 50px;
+    height: 180px;
+    width: 75px;
 }
 
-.options button {
+.kangaroo {
+    height: 160px;
+    width: 100px;
+}
+
+.options .btn-kangaroo {
     position: absolute;
-    top: 60%;
+    top: 50%;
     margin: auto;
     width: 100%;
+    font-size: 15px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.options .btn-giraffe {
+    position: absolute;
+    top: 64%;
+    margin: auto;
+    left: -10%;
+    width: 120%;
+    font-size: 15px;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 
