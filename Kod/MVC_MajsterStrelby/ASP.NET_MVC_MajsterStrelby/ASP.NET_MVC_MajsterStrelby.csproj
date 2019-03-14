@@ -202,10 +202,12 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\Background.png" />
     <Content Include="Images\Background_edit.png" />
+    <Content Include="Images\Game\Bat_edit.png" />
+    <Content Include="Images\Game\BrownBear_edit.png" />
     <Content Include="Images\Game\Giraffe_edit.png" />
-    <Content Include="Images\Game\Giraffe_sign.png" />
+    <Content Include="Images\Game\Goat_edit.png" />
     <Content Include="Images\Game\Kangaroo_edit.png" />
-    <Content Include="Images\Game\Kangaroo_sign.png" />
+    <Content Include="Images\Game\Monkey_edit.png" />
     <Content Include="Images\Leaderboard\Place-4.png" />
     <Content Include="Images\Leaderboard\Place-5.png" />
     <Content Include="Images\Leaderboard\Place_1.png" />

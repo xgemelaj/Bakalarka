@@ -69,8 +69,8 @@ textarea {
 
 .Aoption {
     position: absolute;
-    left: 20%;
-    top: 50%;
+    left: 10%;
+    top: 25%;
 }
 
 .Boption {
@@ -87,8 +87,8 @@ textarea {
 
 .Doption {
     position: absolute;
-    left: 80%;
-    top: 10%;
+    left: 70%;
+    top: 25%;
 }
 
 .Eoption {
@@ -105,8 +105,8 @@ textarea {
 
 .Goption {
     position: absolute;
-    left: 10%;
-    top: 20%;
+    left: 20%;
+    top: 50%;
 }
 
 .Hoption {
@@ -142,7 +142,7 @@ textarea {
 .Moption {
     position: absolute;
     left: 30%;
-    top: 10%;
+    top: 25%;
 }
 
 /*ESTE NEDOROBENE ODTIALTO / NIESU UNIQUE PRE KAZDY NOVY PRIPAD // 13 */
@@ -165,7 +165,22 @@ textarea {
 
 .kangaroo {
     height: 160px;
+    width: 110px;
+}
+
+.brownbear {
+    height: 160px;
     width: 100px;
+}
+
+.goat {
+    height: 150px;
+    width: 100px;
+}
+
+.monkey {
+    height: 130px;
+    width: 110px;
 }
 
 .options .btn-kangaroo {
@@ -189,6 +204,38 @@ textarea {
     padding-right: 0;
 }
 
+.options .btn-brownbear {
+    position: absolute;
+    top: 47%;
+    margin: auto;
+    width: 110%;
+    left: -5%;
+    font-size: 15px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.options .btn-goat {
+    position: absolute;
+    top: 63%;
+    margin: auto;
+    width: 110%;
+    left: -5%;
+    font-size: 15px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.options .btn-monkey {
+    position: absolute;
+    top: 63%;
+    margin: auto;
+    width: 110%;
+    left: -5%;
+    font-size: 15px;
+    padding-left: 0;
+    padding-right: 0;
+}
 
 /*LEADERBOARD*/
 

@@ -11,7 +11,7 @@
     Random rnd = new Random();
     for (int i = 0; i < Model._possibleWords.Count; i++)
     {
-        characterForPossibleWords[i] = rnd.Next(1, 3);
+        characterForPossibleWords[i] = rnd.Next(1, 6);
     }
     char counter = 'A';
 }
@@ -29,20 +29,43 @@
 
     @foreach (var possibleWord in Model._possibleWords)
     {
-       
-        if (characterForPossibleWords[counter-'A'] % 2 == 0)
+
+        switch (characterForPossibleWords[counter - 'A'])
         {
-            <div class="@(counter++)option">
-                <img src="~/Images/Game/Giraffe_edit.png" class="giraffe">
-                <button type="button" class="btn btn-secondary btn-giraffe" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
-            </div>
-        }
-        else
-        {
-            <div class="@(counter++)option">
-                <img src="~/Images/Game/Kangaroo_edit.png" class="kangaroo">
-                <button type="button" class="btn btn-secondary btn-kangaroo" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
-            </div>
+            case 1:
+                <div class="@(counter++)option">
+                    <img src="~/Images/Game/Giraffe_edit.png" class="giraffe">
+                    <button type="button" class="btn btn-secondary btn-giraffe" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                </div>
+                break;
+
+            case 2:
+                <div class="@(counter++)option">
+                    <img src="~/Images/Game/Kangaroo_edit.png" class="kangaroo">
+                    <button type="button" class="btn btn-secondary btn-kangaroo" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                </div>
+                break;
+
+            case 3:
+                <div class="@(counter++)option">
+                    <img src="~/Images/Game/BrownBear_edit.png" class="brownbear">
+                    <button type="button" class="btn btn-secondary btn-brownbear" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                </div>
+                break;
+
+            case 4:
+                <div class="@(counter++)option">
+                    <img src="~/Images/Game/Goat_edit.png" class="goat">
+                    <button type="button" class="btn btn-secondary btn-goat" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                </div>
+                break;
+
+            case 5:
+                <div class="@(counter++)option">
+                    <img src="~/Images/Game/Monkey_edit.png" class="monkey">
+                    <button type="button" class="btn btn-secondary btn-monkey" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                </div>
+                break;
         }
     }
 
@@ -88,12 +111,12 @@
 
     function sendData() {
         $.ajax({
-            contentType: 'application/json',
+        contentType: 'application/json',
             dataType: 'json',
             type: 'POST',
             url: "@Url.Action("SendData","Game")",
             data: JSON.stringify({
-                choosenWords: words,
+            choosenWords: words,
                 model: model
             }),
             success: function (response) {
