@@ -78,7 +78,15 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
         private void GeneratePossibleWordsFromDatabase()
         {
             //Calculate amount of words which need to be generate. This is affected by second skill - Visibility and base component - 5.
-            int numberOfPossibleWords = 5 + (this._actualPlayer._skills[1] - 1) * 3;
+            int numberOfPossibleWords = 5;
+            if((this._actualPlayer._skills[1])>3)
+            {
+                numberOfPossibleWords += 6 + (this._actualPlayer._skills[1] - 3) * 2;
+            }
+            else
+            {
+                numberOfPossibleWords += (this._actualPlayer._skills[1] - 1) * 3;
+            }
 
             string conectionString = ConfigurationManager.ConnectionStrings["DefaultSqlConnection"].ConnectionString;
             string querry = "SELECT TOP " + numberOfPossibleWords + " prve_slovo,druhe_slovo FROM synonimicke_vztahy WHERE prve_slovo LIKE @TaskWord OR prve_slovo LIKE @TaskWord ORDER BY NEWID()";

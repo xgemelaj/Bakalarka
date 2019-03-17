@@ -17,61 +17,81 @@
 }
 
 <div class="div_absolute">
-    <h2 id="taskWord" class="text-center">@Model._taskWord</h2>
-    <h4 id="remainingSeconds" class="text-center">@timeRemaining</h4>
-    <h4 id="remainingArrows" class="text-center">@numberOfShots</h4>
+    <h2 id="taskWord" class="info_game">@Model._taskWord</h2>
+    <h4 id="remainingSeconds" class="info_game">@timeRemaining</h4>
+    @for(int i = 1; i <= numberOfShots; i++)
+    {
+        <img id="Arrow_@i"src="~/Images/Game/Arrow_1.png" class="arrow">
+    }
     <button type="button" class="btn btn-secondary btn-lg centerButton" onclick="return sendData()">Odoslať odpoveď</button>
 </div>
 
 @using (Html.BeginForm("SendData", "Game", FormMethod.Post))
 {
-<div class="options">
+    <div class="options">
 
-    @foreach (var possibleWord in Model._possibleWords)
-    {
-
-        switch (characterForPossibleWords[counter - 'A'])
+        @foreach (var possibleWord in Model._possibleWords)
         {
-            case 1:
-                <div class="@(counter++)option">
-                    <img src="~/Images/Game/Giraffe_edit.png" class="giraffe">
-                    <button type="button" class="btn btn-secondary btn-giraffe" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
-                </div>
-                break;
 
-            case 2:
+            if (counter == 'B' || counter == 'O')
+            {
                 <div class="@(counter++)option">
-                    <img src="~/Images/Game/Kangaroo_edit.png" class="kangaroo">
-                    <button type="button" class="btn btn-secondary btn-kangaroo" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                    <img src="~/Images/Game/Bat_edit.png" class="bat">
+                    <button type="button" class="btn btn-secondary btn-bat" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
                 </div>
-                break;
+            }
+            else
+            {
+                switch (characterForPossibleWords[counter - 'A'])
+                {
+                    case 1:
+                        <div class="@(counter++)option">
+                            <img src="~/Images/Game/Giraffe_edit.png" class="giraffe">
+                            <button type="button" class="btn btn-secondary btn-giraffe" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                        </div>
+                        break;
 
-            case 3:
-                <div class="@(counter++)option">
-                    <img src="~/Images/Game/BrownBear_edit.png" class="brownbear">
-                    <button type="button" class="btn btn-secondary btn-brownbear" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
-                </div>
-                break;
+                    case 2:
+                        <div class="@(counter++)option">
+                            <img src="~/Images/Game/Kangaroo_edit.png" class="kangaroo">
+                            <button type="button" class="btn btn-secondary btn-kangaroo" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                        </div>
+                        break;
 
-            case 4:
-                <div class="@(counter++)option">
-                    <img src="~/Images/Game/Goat_edit.png" class="goat">
-                    <button type="button" class="btn btn-secondary btn-goat" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
-                </div>
-                break;
+                    case 3:
+                        <div class="@(counter++)option">
+                            <img src="~/Images/Game/BrownBear_edit.png" class="brownbear">
+                            <button type="button" class="btn btn-secondary btn-brownbear" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                        </div>
+                        break;
 
-            case 5:
-                <div class="@(counter++)option">
-                    <img src="~/Images/Game/Monkey_edit.png" class="monkey">
-                    <button type="button" class="btn btn-secondary btn-monkey" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
-                </div>
-                break;
+                    case 4:
+                        <div class="@(counter++)option">
+                            <img src="~/Images/Game/Goat_edit.png" class="goat">
+                            <button type="button" class="btn btn-secondary btn-goat" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                        </div>
+                        break;
+
+                    case 5:
+                        <div class="@(counter++)option">
+                            <img src="~/Images/Game/Monkey_edit.png" class="monkey">
+                            <button type="button" class="btn btn-secondary btn-monkey" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                        </div>
+                        break;
+                }
+            }
         }
-    }
 
-</div>
+    </div>
 
-<script>
+    <div id="jumbotron-info" class="jumbotron jumbotron-info">
+        <h1>Inštrukcie</h1>
+        <p>Tvojou úlohou je strieľať na slová ktoré zvieratka držia. Pre zisk čo najväčšieho množstva bodov je dôležité vyberať slová od najväčšieho synonymického vzťahu k zadanému slovuv hornej časti.</p>
+        <p><a class="btn btn-secondary btn-lg" onclick="return hideInstruction.call(this);">Začať hru</a></p>
+    </div>
+
+
+    <script>
     //var taskword = document.getElementById('taskWord');
     var words = [];
     var model = @Html.Raw(Json.Encode(Model));
@@ -91,22 +111,29 @@
             }
         }, 1000);
     }
-    startTick();
 
+    function hideInstruction() {
+        var link = document.getElementById('jumbotron-info');
+        link.style.display = 'none'; 
+        link.style.visibility = 'hidden';
+        startTick();
+    }
 
     function onClickDisabled() {
         if (arrowsRemaining > 0) {
+            var link = document.getElementById('Arrow_' + arrowsRemaining);
+            link.style.display = 'none';
+            link.style.visibility = 'hidden';
             arrowsRemaining -= 1;
-            document.getElementById('remainingArrows').innerText = arrowsRemaining;
+            //document.getElementById('remainingArrows').innerText = arrowsRemaining;
             this.disabled = 'true';
-            console.log(this);
-            console.log(words);
+            //console.log(this);
+            //console.log(words);
             words[counter++] = this.value;
             return true;
         }
         else
             alert("Už niesu ďalšie śípy");
-
     }
 
     function sendData() {
@@ -134,6 +161,6 @@
 
         return true;
     }
-            </script>
-        }
+    </script>
+}
 

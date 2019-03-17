@@ -12,7 +12,6 @@ body {
     background-size: cover;
 }
 
-/* Set padding to keep content from hitting the edges */
 .body-content {
     top: 50%;
     display: block;
@@ -22,28 +21,28 @@ footer {
     text-align: center;
 }
 
-
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
 .dl-horizontal dt {
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
     max-width: 280px;
 }
 
-/*HOME*/
+/*
+    HOME
+*/
 
 .jumbotron-center{
     text-align:center;
 }
 
-/*GAME*/
+/*
+    GAME
+*/
+
 .div_absolute {
     top: 80px;
     left: 0;
@@ -52,7 +51,31 @@ textarea {
     margin-right: auto;
     position: absolute;
     width: 40%;
+    text-align: center;
 }
+
+.arrow {
+    width: 30px;
+    height: 100px;
+}
+
+/*
+    TASKWORD FARBOU ZVYRAZNOVANIE
+*/
+
+/*.info_game {
+    
+    text-align: center;
+    background-color: #e9ecef;
+}*/
+
+/*#taskWord {
+    background-color: #e9ecef;
+}*/
+
+/*#remainingSeconds {
+    background-color: #e9ecef;
+}*/
 
 .centerButton {
     margin: auto;
@@ -75,13 +98,13 @@ textarea {
 
 .Boption {
     position: absolute;
-    left: 40%;
-    top: 50%;
+    left: 20%;
+    top: -50%;
 }
 
 .Coption {
     position: absolute;
-    left: 30%;
+    left: 27%;
     top: 90%;
 }
 
@@ -105,7 +128,7 @@ textarea {
 
 .Goption {
     position: absolute;
-    left: 20%;
+    left: 40%;
     top: 50%;
 }
 
@@ -145,17 +168,15 @@ textarea {
     top: 25%;
 }
 
-/*ESTE NEDOROBENE ODTIALTO / NIESU UNIQUE PRE KAZDY NOVY PRIPAD // 13 */
-
 .Noption {
     position: absolute;
-    left: 10%;
-    top: 75%;
+    left: 20%;
+    top: 50%;
 }
 .Ooption {
     position: absolute;
-    left: 10%;
-    top: 75%;
+    left: 80%;
+    top: -50%;
 }
 
 .giraffe {
@@ -181,6 +202,11 @@ textarea {
 .monkey {
     height: 130px;
     width: 110px;
+}
+
+.bat {
+    height: 160px;
+    width: 200px;
 }
 
 .options .btn-kangaroo {
@@ -237,12 +263,49 @@ textarea {
     padding-right: 0;
 }
 
-/*LEADERBOARD*/
+.options .btn-bat {
+    position: absolute;
+    top: 65%;
+    margin: auto;
+    width: 70%;
+    left: 15%;
+    right: 15%;
+    font-size: 15px;
+    padding-left: 0;
+    padding-right: 0;
+}
 
-.spaceUpper{
-    padding-top:3em;
+.jumbotron-info {
+    top: 30%;
+    position: absolute;
+    left: 20%;
+    right: 20%;
+    width: 60%;
+    text-align: center;
+}
+
+/*
+    LEADERBOARD
+*/
+
+/*.spaceUpper {
+    padding-top: 3em;
+}*/
+
+
+.col-3 .place-img {
+    width: 50px;
+    height: 50px;
 }
 
 .leaderboard_table {
     font-size: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.place-img
+{
+    width:60px;
+    height:60px;
 }

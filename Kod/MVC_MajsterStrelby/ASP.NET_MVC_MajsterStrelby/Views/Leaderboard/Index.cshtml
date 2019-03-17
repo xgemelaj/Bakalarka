@@ -8,29 +8,30 @@
     <div class="row leaderboard_table">
         @foreach (var player in Model.GetPlayers())
         {
-            <div class="col-md-2">
-                @(counter++)
+            <div class="col-md-2 col-sm-3 col-3">
+                <img src="~/Images/Leaderboard/Place_@(counter++).png" class="place-img">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6 col-9">
                 @player._name
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 offset-md-0 col-sm-1 offset-sm-0 col-3 offset-6">
                 @player._level
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-sm-2 col-3">
                 @player._resolved
             </div>
         }
 
-        <div class="col-md-2 spaceUpper">
+        <div class="col-md-2 col-sm-3 col-3 spaceUpper">
+            <img src="~/Images/Leaderboard/Place_@(counter).png" class="place-img">
         </div>
-        <div class="col-md-4 spaceUpper">
+        <div class="col-md-4 col-sm-6 col-9 spaceUpper">
             @Model.GetActualPlayer()._name
         </div>
-        <div class="col-md-3 spaceUpper">
+        <div class="col-md-3 offset-md-0 col-sm-1 offset-sm-0 col-3 offset-6 spaceUpper">
             @Model.GetActualPlayer()._level
         </div>
-        <div class="col-md-3 spaceUpper">
+        <div class="col-md-3 col-sm-2 col-3 spaceUpper">
             @Model.GetActualPlayer()._resolved
         </div>
     </div>
