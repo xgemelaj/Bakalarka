@@ -131,17 +131,9 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
                     using (var cmd = new SqlCommand(querry, connection))
                     {
                         cmd.Parameters.AddWithValue("@IdPlayer", actualPlayerId);
-                        if (string.Compare(model._taskWord, choosenWord) == -1)
-                        {
-                            cmd.Parameters.AddWithValue("@FirstWord", model._taskWord);
-                            cmd.Parameters.AddWithValue("@SecondWord", choosenWord);
-                        }
-                        else
-                        {
-                            cmd.Parameters.AddWithValue("@FirstWord", choosenWord);
-                            cmd.Parameters.AddWithValue("@SecondWord", model._taskWord);
-                        }
-                        cmd.Parameters.AddWithValue("@Distance", counter+1);
+                        cmd.Parameters.AddWithValue("@FirstWord", model._taskWord);
+                        cmd.Parameters.AddWithValue("@SecondWord", choosenWord);
+                        cmd.Parameters.AddWithValue("@Distance", choosenWords.Length - counter);
                         cmd.Parameters.AddWithValue("@Points", points[counter]);
 
                         cmd.ExecuteNonQuery();
@@ -159,16 +151,8 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
                     using (var cmd = new SqlCommand(querry, connection))
                     {
                         cmd.Parameters.AddWithValue("@IdPlayer", actualPlayerId);
-                        if (string.Compare(model._taskWord, word) == -1)
-                        {
-                            cmd.Parameters.AddWithValue("@FirstWord", model._taskWord);
-                            cmd.Parameters.AddWithValue("@SecondWord", word);
-                        }
-                        else
-                        {
-                            cmd.Parameters.AddWithValue("@FirstWord", word);
-                            cmd.Parameters.AddWithValue("@SecondWord", model._taskWord);
-                        }
+                        cmd.Parameters.AddWithValue("@FirstWord", model._taskWord);
+                        cmd.Parameters.AddWithValue("@SecondWord", word);
                         cmd.Parameters.AddWithValue("@Distance", -1);
                         cmd.Parameters.AddWithValue("@Points", 0);
 

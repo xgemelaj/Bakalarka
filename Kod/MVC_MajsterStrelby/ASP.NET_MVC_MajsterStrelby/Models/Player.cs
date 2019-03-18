@@ -51,11 +51,38 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
                 }
             }
 
-            this._id = Int32.Parse(dT.Rows[0][0].ToString());
-            this._name = dT.Rows[0][1].ToString();
-            this._points = Int32.Parse(dT.Rows[0][2].ToString());
+            if(dT.Rows.Count>0)
+            {
+                this._id = Int32.Parse(dT.Rows[0][0].ToString());
+                this._name = dT.Rows[0][1].ToString();
+                this._points = Int32.Parse(dT.Rows[0][2].ToString());
+                this._resolved = Int32.Parse(dT.Rows[0][3].ToString());
+            }
+            else
+            {
+                //If not played any game
+                querry = "SELECT ih.id,ih.meno FROM info_hrac ih WHERE ih.id = @IdPlayer ";
+                dT = new DataTable();
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    using (SqlDataAdapter da = new SqlDataAdapter(querry, connection))
+                    {
+                        da.SelectCommand.Parameters.AddWithValue("IdPlayer", idPlayer);
+                        var commandBuilder = new SqlCommandBuilder(da);
+                        da.Fill(dT);
+                    }
+                }
+
+                this._id = Int32.Parse(dT.Rows[0][0].ToString());
+                this._name = dT.Rows[0][1].ToString();
+                this._points = 0;
+                this._resolved = 0;
+            }
+            //this._id = Int32.Parse(dT.Rows[0][0].ToString());
+            //this._name = dT.Rows[0][1].ToString();
+            //this._points = Int32.Parse(dT.Rows[0][2].ToString());
             this.CalculateLevel();
-            this._resolved = Int32.Parse(dT.Rows[0][3].ToString());
+            //this._resolved = Int32.Parse(dT.Rows[0][3].ToString());
             this._skills = FillSkills(connectionString);
         }
 

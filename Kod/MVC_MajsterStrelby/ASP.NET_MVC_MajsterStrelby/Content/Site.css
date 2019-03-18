@@ -309,3 +309,44 @@ textarea {
     width:60px;
     height:60px;
 }
+
+/*
+    PROFILE
+*/
+.profile {
+    width: 300px;
+    text-align:center;
+}
+
+.level {
+    width: 33%;
+    margin: auto;
+    text-align: center;
+    display: inline-block;
+    float: left;
+    padding-left: 10px;
+    padding-right: 0px;
+}
+
+.solved {
+    width: 66%;
+    margin: auto;
+    text-align: center;
+    display: inline-block;
+    padding-left: 40px;
+    padding-right: 0px;
+}
+
+.progress
+{
+    width: 100%;
+}
+
+#center{
+    text-align:center;
+}
+
+.btn-profile {
+    margin-top: 10px;
+    width: 100%;
+}
