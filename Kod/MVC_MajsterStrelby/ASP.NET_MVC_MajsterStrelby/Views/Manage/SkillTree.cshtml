@@ -27,25 +27,29 @@
     @using (Html.BeginForm("UpgradeSkill", "Manage", FormMethod.Post))
     {
         <div class="power">
-            <h6><b>Sila: @skillLevels[0]</b> </h6>
+            <h5><b>Sila</b> </h5>
+            <h6>Úroveň: @skillLevels[0]</h6>
             <button type="submit" name="upgradeSkillButton" class="btn btn-secondary btn-md " + @disable[0] value=0 data-toggle="tooltip" data-placement="bottom" +
                     title="Vylepšením tejto zručnosti získate viac šípov pre každé herné kolo.">Vylepšiť</button>
         </div>
             
         <div class="visibility">
-            <h6><b>Rozhľad: @skillLevels[1]</b> </h6>
+            <h5><b>Rozhľad</b> </h5>
+            <h6>Úroveň: @skillLevels[1]</h6>
             <button type="submit" name="upgradeSkillButton" class="btn btn-secondary btn-md " + @disable[1] value=1 data-toggle="tooltip" data-placement="bottom" +
                     title="Vylepšením tejto zručnosti získate viac možností pre každé herné kolo.">Vylepšiť</button>
         </div>
 
         <div class="stamina">
-            <h6><b>Výdrž: @skillLevels[2]</b> </h6>
+            <h5><b>Výdrž</b> </h5>
+            <h6>Úroveň: @skillLevels[2]</h6>
             <button type="submit" name="upgradeSkillButton" class="btn btn-secondary btn-md " + @disable[2] value=2 data-toggle="tooltip" data-placement="bottom" +
                     title="Vylepšením tejto zručnosti získate viac času na každé herné kolo.">Vylepšiť</button>
         </div>
             
         <div class="smartness">
-            <h6><b>Bystrosť: @skillLevels[3]</b> </h6>
+            <h5><b>Bystrosť</b> </h5>
+            <h6>Úroveň: @skillLevels[3]</h6>
             <button type="submit" name="upgradeSkillButton" class="btn btn-secondary btn-md " + @disable[3] value=3 data-toggle="tooltip" data-placement="bottom" +
                     title="Vylepšením tejto zručnosti získate body naviac za každé ohodnotenie.">Vylepšiť</button>
         </div>

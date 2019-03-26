@@ -2,8 +2,7 @@
 @{
     ViewBag.Title = "Game";
     //Calculate time which depends on thirth skill - Stamina and base component - 60 seconds
-    var endTime = DateTime.UtcNow.AddSeconds((Model._actualPlayer._skills[2] - 1) * 5 + 60);
-    var timeRemaining = TimeSpan.FromTicks(endTime.Ticks - DateTime.UtcNow.Ticks).TotalSeconds;
+    var endTime = (Model._actualPlayer._skills[2] - 1) * 5 + 60;
     //Calculate number of attempts which player have which dpends on first skill - Power and base component - 3 attempts
     var numberOfShots = 3 + (Model._actualPlayer._skills[0] / 2);
     //Fill the random chance to create random character to positions
@@ -11,14 +10,14 @@
     Random rnd = new Random();
     for (int i = 0; i < Model._possibleWords.Count; i++)
     {
-        characterForPossibleWords[i] = rnd.Next(1, 6);
+        characterForPossibleWords[i] = rnd.Next(1, 8);
     }
     char counter = 'A';
 }
 
 <div class="div_absolute">
     <h2 id="taskWord" class="info_game">@Model._taskWord</h2>
-    <h4 id="remainingSeconds" class="info_game">@timeRemaining</h4>
+    <h4 id="remainingSeconds" class="info_game">@endTime</h4>
     @for(int i = 1; i <= numberOfShots; i++)
     {
         <img id="Arrow_@i"src="~/Images/Game/Arrow_1.png" class="arrow">
@@ -28,61 +27,95 @@
 
 @using (Html.BeginForm("SendData", "Game", FormMethod.Post))
 {
-    <div class="options">
+<div class="options">
 
-        @foreach (var possibleWord in Model._possibleWords)
+    @foreach (var possibleWord in Model._possibleWords)
+    {
+        if (counter == 'B' || counter == 'O')
         {
-
-            if (counter == 'B' || counter == 'O')
+            if (characterForPossibleWords[counter - 'A'] % 3 == 0)
             {
-                <div class="@(counter++)option">
-                    <img src="~/Images/Game/Bat_edit.png" class="bat">
-                    <button type="button" class="btn btn-secondary btn-bat" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                <div id="@(counter)option" class="@(counter++)option">
+                    <img src="~/Images/Game/Bird_edit.png" class="bird">
+                    <button type="button" class="btn btn-secondary btn-bird" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
                 </div>
             }
             else
             {
-                switch (characterForPossibleWords[counter - 'A'])
+                if (characterForPossibleWords[counter - 'A'] % 3 == 1)
                 {
-                    case 1:
-                        <div class="@(counter++)option">
-                            <img src="~/Images/Game/Giraffe_edit.png" class="giraffe">
-                            <button type="button" class="btn btn-secondary btn-giraffe" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                    <div id="@(counter)option" class="@(counter++)option">
+                        <img src="~/Images/Game/Bat_edit.png" class="bat">
+                        <button type="button" class="btn btn-secondary btn-bat" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                    </div>
+                }
+                else
+                {
+                    if (characterForPossibleWords[counter - 'A'] % 3 == 2)
+                    {
+                        <div id="@(counter)option" class="@(counter++)option">
+                            <img src="~/Images/Game/Owl_edit.png" class="owl">
+                            <button type="button" class="btn btn-secondary btn-owl" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
                         </div>
-                        break;
-
-                    case 2:
-                        <div class="@(counter++)option">
-                            <img src="~/Images/Game/Kangaroo_edit.png" class="kangaroo">
-                            <button type="button" class="btn btn-secondary btn-kangaroo" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
-                        </div>
-                        break;
-
-                    case 3:
-                        <div class="@(counter++)option">
-                            <img src="~/Images/Game/BrownBear_edit.png" class="brownbear">
-                            <button type="button" class="btn btn-secondary btn-brownbear" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
-                        </div>
-                        break;
-
-                    case 4:
-                        <div class="@(counter++)option">
-                            <img src="~/Images/Game/Goat_edit.png" class="goat">
-                            <button type="button" class="btn btn-secondary btn-goat" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
-                        </div>
-                        break;
-
-                    case 5:
-                        <div class="@(counter++)option">
-                            <img src="~/Images/Game/Monkey_edit.png" class="monkey">
-                            <button type="button" class="btn btn-secondary btn-monkey" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
-                        </div>
-                        break;
+                    }
                 }
             }
         }
+        else
+        {
+            switch (characterForPossibleWords[counter - 'A'])
+            {
+                case 1:
+                    <div id="@(counter)option" class="@(counter++)option">
+                        <img src="~/Images/Game/Giraffe_edit.png" class="giraffe">
+                        <button type="button" class="btn btn-secondary btn-giraffe" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                    </div>
+                    break;
 
-    </div>
+                case 2:
+                    <div id="@(counter)option" class="@(counter++)option">
+                        <img src="~/Images/Game/Kangaroo_edit.png" class="kangaroo">
+                        <button type="button" class="btn btn-secondary btn-kangaroo" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                    </div>
+                    break;
+
+                case 3:
+                    <div id="@(counter)option" class="@(counter++)option">
+                        <img src="~/Images/Game/BrownBear_edit.png" class="brownbear">
+                        <button type="button" class="btn btn-secondary btn-brownbear" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                    </div>
+                    break;
+
+                case 4:
+                    <div id="@(counter)option" class="@(counter++)option">
+                        <img src="~/Images/Game/Goat_edit.png" class="goat">
+                        <button type="button" class="btn btn-secondary btn-goat" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                    </div>
+                    break;
+
+                case 5:
+                    <div id="@(counter)option" class="@(counter++)option">
+                        <img src="~/Images/Game/Monkey_edit.png" class="monkey">
+                        <button type="button" class="btn btn-secondary btn-monkey" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                    </div>
+                    break;
+                case 6:
+                    <div id="@(counter)option" class="@(counter++)option">
+                        <img src="~/Images/Game/Deer_edit.png" class="deer">
+                        <button type="button" class="btn btn-secondary btn-deer" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                    </div>
+                    break;
+                case 7:
+                    <div id="@(counter)option" class="@(counter++)option">
+                        <img src="~/Images/Game/Sheep_edit.png" class="sheep">
+                        <button type="button" class="btn btn-secondary btn-sheep" onclick="return onClickDisabled.call(this);" value=@possibleWord>@possibleWord</button>
+                    </div>
+                    break;
+            }
+        }
+    }
+
+</div>
 
     <div id="jumbotron-info" class="jumbotron jumbotron-info">
         <h1>Inštrukcie</h1>
@@ -91,16 +124,31 @@
     </div>
 
 
-    <script>
+<script>
     //var taskword = document.getElementById('taskWord');
     var words = [];
     var model = @Html.Raw(Json.Encode(Model));
     var counter = 0;
-    var secRemaining = @timeRemaining;
-    var arrowsRemaining = @numberOfShots;
+    var secRemaining = @endTime;
+    var arrowsRemaining = @numberOfShots;   
+    var numberOfCharacters = @Model._possibleWords.Count;
+
+    function getCssProperty(elmId, property) {
+        var elem = document.getElementById(elmId);
+        return window.getComputedStyle(elem, null).getPropertyValue(property);
+    }
 
     function startTick() {
         var _ticks = setInterval(function () {
+            //Move with characters
+            var id = String.fromCharCode('A'.charCodeAt() + Math.floor((Math.random() * numberOfCharacters))) + 'option';
+            var link = document.getElementById(id);
+            var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+            var leftValue = parseFloat(getCssProperty(id, "left"));
+            
+            link.style.left = leftValue + (plusOrMinus * 5) + 'px';
+
+
             if (secRemaining > 0) {
                 secRemaining -= 1;
                 document.getElementById('remainingSeconds').innerText = secRemaining;
@@ -161,6 +209,6 @@
 
         return true;
     }
-    </script>
+</script>
 }
 
