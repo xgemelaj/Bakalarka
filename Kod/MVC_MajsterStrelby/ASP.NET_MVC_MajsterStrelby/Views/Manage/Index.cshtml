@@ -22,34 +22,7 @@
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div class="container profile">
     <h2>Profil</h2>
-    @*<h4>Uprav si nastavenia pre účet</h4>*@
     <hr />
-    @*<dl class="dl-horizontal">
-        <dt>Heslo:</dt>
-        <dd>
-            [
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Zmeniť heslo", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Vytvoriť heslo", "SetPassword")
-            }
-            ]
-        </dd>*@
-    @*<dt>External Logins:</dt>
-        <dd>
-            @Model.Logins.Count [
-            @Html.ActionLink("Manage", "ManageLogins") ]
-        </dd>*@
-
-    @*<p></p>
-        <p></p>*@
-    @*<dt>Štatistiky:</dt>
-        <dd>Level: @Model.ActualPlayerInformation._level</dd>
-        <dd>Body: @Model.ActualPlayerInformation._points</dd>
-        <dd>Vyriešené: @Model.ActualPlayerInformation._resolved</dd>*@
     <div class="level">
         <h2>@Model.ActualPlayerInformation._level</h2>
         <h5>LEVEL</h5>
@@ -71,9 +44,9 @@
         @*<a href="@Url.Action("Index", "Skilltree")"><b>Strom Zručností</b></a>*@
     </div>
 
-    @*<div class="achievments">
-        <a href="@Url.Action("Index", "Achievements")" class="btn btn-secondary btn-profile">Zbierka úspechov</a>
-    </div>*@
+    <div class="achievments">
+        <a href="@Url.Action("Achievements")" class="btn btn-secondary btn-profile">Zbierka úspechov</a>
+    </div>
 
     <div class="changePassword">
         <a href="@Url.Action("ChangePassword")" class="btn btn-secondary btn-profile">Zmeniť heslo</a>

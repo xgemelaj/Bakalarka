@@ -21,6 +21,11 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
         public int PossibleUpgrades { get; set; }
     }
 
+    public class AchievmentsViewModel
+    {
+        public Player ActualPlayerInformation { get; set; }
+    }
+
     public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }

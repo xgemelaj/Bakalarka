@@ -11,32 +11,60 @@
     }
 }
 
-<h2>Strom Zručností</h2>
-<p></p>
-<p>Tvoj level je @Model.ActualPlayerInformation._level.</p>
-<p>Počet nepridelených bodov: @Model.PossibleUpgrades</p>
 
-@using (Html.BeginForm("UpgradeSkill", "Manage", FormMethod.Post))
-{
-    <dl class="dl-horizontal">
-        <dt>Sila: @skillLevels[0] </dt>
-        <dd><button type="submit" name="upgradeSkillButton" class="btn btn-primary btn-md " + @disable[0] value=0>Vylepšiť</button></dd>
-
-        <dt>Rozhľad: @skillLevels[1] </dt>
-        <dd><button type="submit" name="upgradeSkillButton" class="btn btn-primary btn-md " + @disable[1] value=1>Vylepšiť</button></dd>
-
-        <dt>Výdrž: @skillLevels[2] </dt>
-        <dd><button type="submit" name="upgradeSkillButton" class="btn btn-primary btn-md " + @disable[2] value=2>Vylepšiť</button></dd>
-
-        <dt>Bystrosť: @skillLevels[3] </dt>
-        <dd><button type="submit" name="upgradeSkillButton" class="btn btn-primary btn-md " + @disable[3] value=3>Vylepšiť</button></dd>
-    </dl>
-}
-
-@if (@TempData["Message"] != null)
-{
-    <div class="alert alert-success">
-        <strong>Gratulujem!</strong> Úroveň zručnosti zvýšená.
+<div class="container profile">
+    <h2>Strom Zručností</h2>
+    <hr />
+    <div class="level_skilltree">
+        <h2>@Model.ActualPlayerInformation._level</h2>
+        <h5>LEVEL</h5>
+    </div>
+    <div class="upgrades">
+        <h2>@Model.PossibleUpgrades</h2>
+        <h5>VYLEPŠENIA</h5>
     </div>
 
-}
+    @using (Html.BeginForm("UpgradeSkill", "Manage", FormMethod.Post))
+    {
+        <div class="power">
+            <h6><b>Sila: @skillLevels[0]</b> </h6>
+            <button type="submit" name="upgradeSkillButton" class="btn btn-secondary btn-md " + @disable[0] value=0 data-toggle="tooltip" data-placement="bottom" +
+                    title="Vylepšením tejto zručnosti získate viac šípov pre každé herné kolo.">Vylepšiť</button>
+        </div>
+            
+        <div class="visibility">
+            <h6><b>Rozhľad: @skillLevels[1]</b> </h6>
+            <button type="submit" name="upgradeSkillButton" class="btn btn-secondary btn-md " + @disable[1] value=1 data-toggle="tooltip" data-placement="bottom" +
+                    title="Vylepšením tejto zručnosti získate viac možností pre každé herné kolo.">Vylepšiť</button>
+        </div>
+
+        <div class="stamina">
+            <h6><b>Výdrž: @skillLevels[2]</b> </h6>
+            <button type="submit" name="upgradeSkillButton" class="btn btn-secondary btn-md " + @disable[2] value=2 data-toggle="tooltip" data-placement="bottom" +
+                    title="Vylepšením tejto zručnosti získate viac času na každé herné kolo.">Vylepšiť</button>
+        </div>
+            
+        <div class="smartness">
+            <h6><b>Bystrosť: @skillLevels[3]</b> </h6>
+            <button type="submit" name="upgradeSkillButton" class="btn btn-secondary btn-md " + @disable[3] value=3 data-toggle="tooltip" data-placement="bottom" +
+                    title="Vylepšením tejto zručnosti získate body naviac za každé ohodnotenie.">Vylepšiť</button>
+        </div>
+    }
+</div>
+
+    @if (@TempData["Message"] == "Success")
+    {
+        <div class="alert alert-success">
+            <strong>Gratulujem!</strong> Úroveň zručnosti zvýšená.
+        </div>
+
+    }
+    else
+    {
+        if (@TempData["Message"] == "Failed")
+        {
+            <div class="alert alert-success">
+                <strong>Pardon!</strong> Nepodarilo sa zvýśiť úroveň zručnosti.
+            </div>
+        }
+    }

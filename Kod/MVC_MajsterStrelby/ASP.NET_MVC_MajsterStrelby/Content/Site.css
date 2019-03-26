@@ -333,6 +333,7 @@ textarea {
     margin: auto;
     text-align: center;
     display: inline-block;
+    float: right;
     padding-left: 40px;
     padding-right: 0px;
 }
@@ -348,5 +349,78 @@ textarea {
 
 .btn-profile {
     margin-top: 10px;
+    width: 100%;
+}
+
+/*
+    SKILLTREE
+*/
+
+.level_skilltree {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    display: inline-block;
+    float: left;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.upgrades {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    display: inline-block;
+    float: right;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.power {
+    padding-top: 20px;
+    width: 50%;
+    float: left;
+}
+
+.visibility {
+    padding-top: 20px;
+    width: 50%;
+    float: right;
+}
+
+.stamina {
+    padding-top: 20px;
+    width: 50%;
+    float: left;
+}
+
+.smartness {
+    padding-top: 20px;
+    width: 50%;
+    float: right;
+}
+
+
+/*
+    ACHIEVMENTS
+*/
+
+.ceratinLevel {
+    padding-top: 20px;
+    width: 100%;
+}
+
+.pointsPergame {
+    padding-top: 20px;
+    width: 100%;
+}
+
+.enhancementAttributes {
+    padding-top: 20px;
+    width: 100%;
+}
+
+.achievingEvaluations {
+    padding-top: 20px;
     width: 100%;
 }

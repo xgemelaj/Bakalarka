@@ -10,4 +10,20 @@
     @Html.ActionLink("Chceš hrať ďalšie kolo?", "Index", "Game")
 </div>
 
+@if (@TempData["Message"] != "")
+{
+    if (@TempData["Message"] == "A" || @TempData["Message"] == "V")
+    {
+        <div class="alert alert-success">
+            <strong>Gratulujem, získal si nový úspech!</strong> Získal si nový úspech! Viac v profile.
+        </div>
+    }
 
+    if (@TempData["Message"] == "S" || @TempData["Message"] == "V")
+    {
+        <div class="alert alert-success">
+            <strong>Je možnosť zvýšiť zručnosť!</strong> Viac v profile.
+        </div>
+    }
+
+}

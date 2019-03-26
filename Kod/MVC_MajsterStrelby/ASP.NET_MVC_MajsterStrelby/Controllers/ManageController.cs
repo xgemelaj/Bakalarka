@@ -103,17 +103,36 @@ namespace ASP.NET_MVC_MajsterStrelby.Controllers
             var userName = User.Identity.Name;
             var player = new Player();
             player.FillInformation(userName);
-            player.UpgradeSkill(upgradeSkillButton);
 
-            TempData["message"] = "Success";
-            return RedirectToAction("SkillTree");
+            int possibleUpgrades = player.CountPossibleSkillUpgrades();
+
+            if(possibleUpgrades>0)
+            {
+                player.UpgradeSkill(upgradeSkillButton);
+                bool updateAchievments = player.UpdateAchievments(0);
+
+                TempData["message"] = "Success";
+                return RedirectToAction("SkillTree");
+            }
+            else
+            {
+                TempData["message"] = "Failed";
+                return RedirectToAction("SkillTree");
+            }
         }
 
         //
         // GET: /Manage/Achievements
         public ActionResult Achievements()
         {
-            return View();
+            var userName = User.Identity.Name;
+            var player = new Player();
+            player.FillInformation(userName);
+
+            AchievmentsViewModel viewModel = new AchievmentsViewModel();
+            viewModel.ActualPlayerInformation = player;
+
+            return View(viewModel);
         }
 
         //

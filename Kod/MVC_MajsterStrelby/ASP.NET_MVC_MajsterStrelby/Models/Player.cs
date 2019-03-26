@@ -16,6 +16,7 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
         public int _level { get; set; }
         public int _resolved { get; set; }
         public int[] _skills { get; set; }
+        public int[] _achievments { get; set; }
 
         public Player() {}
 
@@ -84,6 +85,7 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
             this.CalculateLevel();
             //this._resolved = Int32.Parse(dT.Rows[0][3].ToString());
             this._skills = FillSkills(connectionString);
+            this._achievments = FillAchievments(connectionString);
         }
 
         public void UpgradeSkill(string upgradeSkillButton)
@@ -222,6 +224,162 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
                 possibleUpgrades -= (this._skills[i] - 1);
 
             return possibleUpgrades;
+        }
+
+        private int[] FillAchievments(string connectionString)
+        {
+            int[] achievments = new int[4] { 0, 0, 0, 0 };
+
+            var querry = "SELECT a.typ_achievmentu,MAX(a.level_achievmentu) " +
+                            "FROM info_hrac ih " +
+                            "LEFT JOIN achievmenty a " +
+                            "ON ih.id = a.id_hrac " +
+                            "WHERE ih.id = @IdPlayer " +
+                            "GROUP BY a.typ_achievmentu ";
+
+            DataTable dT = new DataTable();
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                using (SqlDataAdapter da = new SqlDataAdapter(querry, connection))
+                {
+                    da.SelectCommand.Parameters.AddWithValue("IdPlayer", this._id);
+                    var commandBuilder = new SqlCommandBuilder(da);
+                    da.Fill(dT);
+                }
+            }
+
+            //If player dont have information about achievments, we send to database all skills on level 1 what is starting position
+            if (dT.Rows.Count < 4)
+                SetBasicAchievmentsSettingInDatabase(connectionString);
+
+            //If player have information about achievments in database we send them as a return
+            else
+                for (int i = 0; i < 4; i++)
+                    achievments[i] = Int32.Parse(dT.Rows[i][1].ToString());
+
+            return achievments;
+        }
+
+        private void SetBasicAchievmentsSettingInDatabase(string connectionString)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                for (int i = 0; i < 4; i++)
+                {
+                    string querry = "INSERT INTO achievmenty (id_hrac, typ_achievmentu, level_achievmentu) VALUES(@IdPlayer, @Achievment, @AchievmentLevel)";
+
+                    using (var cmd = new SqlCommand(querry, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@IdPlayer", this._id);
+                        cmd.Parameters.AddWithValue("@Achievment", i);
+                        cmd.Parameters.AddWithValue("@AchievmentLevel", 0);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                connection.Close();
+            }
+        }
+
+        internal bool UpdateAchievments(int finalPoints)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultSqlConnection"].ConnectionString;
+            bool result = false;
+            this.FillInformation(this._name);
+            int[] achievments = this._achievments;
+            int controlValueOfAchievment = 0;
+
+            //Check for highest level
+            if (this._level < 2)
+                controlValueOfAchievment = 0;
+            else
+            {
+                controlValueOfAchievment = 1;
+                if (this._level > 5)
+                    controlValueOfAchievment = this._level / 5;
+            }
+
+            if(achievments[0] < controlValueOfAchievment)
+            {
+                achievments[0] = controlValueOfAchievment;
+                result = true;
+            }
+
+            //Check for maximum achieved points per one game
+            controlValueOfAchievment = 0;
+            if (finalPoints > 70)
+                controlValueOfAchievment = 1 + (finalPoints-70)/30  ;
+            else
+                controlValueOfAchievment = 0;
+
+            if (achievments[1] < controlValueOfAchievment)
+            {
+                achievments[1] = controlValueOfAchievment;
+                result = true;
+            }
+
+            //Check for maximum enhancement of attributes
+            controlValueOfAchievment = 0;
+            int sumSkills = this._skills.Sum();
+            if (sumSkills > 4)
+            {
+                controlValueOfAchievment = 1 + (sumSkills - 5) / 2;
+            }
+            else
+                controlValueOfAchievment = 0;
+
+            if (achievments[2] < controlValueOfAchievment)
+            {
+                achievments[2] = controlValueOfAchievment;
+                result = true;
+            }
+
+            //Check for maximum evaluations
+            controlValueOfAchievment = 0;
+            if (this._resolved > 9)
+            {
+                controlValueOfAchievment = this._resolved / 10;
+            }
+            else
+                controlValueOfAchievment = 0;
+
+            if (achievments[3] < controlValueOfAchievment)
+            {
+                achievments[3] = controlValueOfAchievment;
+                result = true;
+            }
+
+            //If something changed insert into database
+            if (result)
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    for (int i = 0; i < 4; i++)
+                    {
+                        string querry = "INSERT INTO achievmenty (id_hrac, typ_achievmentu, level_achievmentu) VALUES(@IdPlayer, @Achievment, @AchievmentLevel)";
+
+                        using (var cmd = new SqlCommand(querry, connection))
+                        {
+                            cmd.Parameters.AddWithValue("@IdPlayer", this._id);
+                            cmd.Parameters.AddWithValue("@Achievment", i);
+                            cmd.Parameters.AddWithValue("@AchievmentLevel", achievments[i]);
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    connection.Close();
+                }
+            }
+            
+
+            return result;
         }
     }
 }
