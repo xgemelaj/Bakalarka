@@ -1,0 +1,82 @@
+﻿@model ASP.NET_MVC_MajsterStrelby.Models.AchievmentsViewModel
+@{
+    ViewBag.Title = "Achievements";
+    var achievmentLevels = Model.ActualPlayerInformation._achievments;
+    double[] percentage = new double[4];
+    double actualLevelValue = 0;
+    double nextLevelvalue = 0;
+    //Percentage to next CertainLevel
+
+    if(Model.ActualPlayerInformation._achievments[0]>0)
+    {
+        if (Model.ActualPlayerInformation._achievments[0] > 1)
+        {
+            actualLevelValue = (Model.ActualPlayerInformation._achievments[0] - 1) * 5;
+            nextLevelvalue = Model.ActualPlayerInformation._achievments[0] * 5;
+        }
+        else
+        {
+            actualLevelValue = 2;
+            nextLevelvalue = 5;
+        }
+    }
+    else
+    {
+        actualLevelValue = 0;
+        nextLevelvalue = 2;
+    }
+
+    percentage[0] = Math.Round(((Model.ActualPlayerInformation._level - actualLevelValue) / nextLevelvalue) * 100,0);
+
+    //Percentage to points per Game **MOMENTALLY 85 BECAUSE WE DONT HAVE HOW MUCH POINTS IS MAXIMUM**
+    percentage[1] = 85;
+
+    //Percentage to points per Enhancement Attribute
+    double sum = Model.ActualPlayerInformation._skills.Sum()-4;
+    actualLevelValue = Model.ActualPlayerInformation._achievments[2] > 0 ? 1 + (Model.ActualPlayerInformation._achievments[2] - 1) * 2 : 0;
+    nextLevelvalue = 1 + Model.ActualPlayerInformation._achievments[2] * 2;
+    percentage[2] = Math.Round(((sum - actualLevelValue) / nextLevelvalue) * 100, 0);
+
+    //Percentage to points per Achieved Evaluations
+    actualLevelValue = Model.ActualPlayerInformation._achievments[3] > 0 ? (Model.ActualPlayerInformation._achievments[3] - 1) * 10 : 0;
+    nextLevelvalue = Model.ActualPlayerInformation._achievments[3] * 10;
+    percentage[3] = Math.Round(((Model.ActualPlayerInformation._resolved - actualLevelValue) / nextLevelvalue) * 100, 0);
+}
+
+<div class="container profile">
+    <h2>Zbierka úspechov</h2>
+    <hr />
+   
+    <div class="ceratinLevel">
+        <h6><b>Úspech za dosiahnutie levelu</b> </h6>
+        <h6>Úroveň: @achievmentLevels[0]</h6>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" style="width: @percentage[0]%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+
+    <div class="pointsPergame">
+        <h6><b>Úspech za počet bodov v jednej hre</b> </h6>
+        <h6>Úroveň: @achievmentLevels[1]</h6>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" style="width: @percentage[1]%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+
+    <div class="enhancementAttributes">
+        <h6><b>Úspech za dosiahnutie zručností</b> </h6>
+        <h6>Úroveň: @achievmentLevels[2]</h6>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" style="width: @percentage[2]%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+
+    <div class="achievingEvaluations">
+        <h6><b>Úspech za počet evaluácií</b> </h6>
+        <h6>Úroveň: @achievmentLevels[3]</h6>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" style="width: @percentage[3]%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+  
+</div>

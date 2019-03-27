@@ -1,0 +1,74 @@
+﻿@model ASP.NET_MVC_MajsterStrelby.Models.SkillTreeViewModel
+@{
+    /**/
+
+    ViewBag.Title = "SkillTree";
+    var skillLevels = Model.ActualPlayerInformation._skills;
+    string[] disable = new string[4];
+    for (int i = 0; i < 4; i++)
+    {
+        disable[i] = (Model.PossibleUpgrades > 0 && skillLevels[i] < 5) ? "active" : "disabled";
+    }
+}
+
+
+<div class="container profile">
+    <h2>Strom Zručností</h2>
+    <hr />
+    <div class="level_skilltree">
+        <h2>@Model.ActualPlayerInformation._level</h2>
+        <h5>LEVEL</h5>
+    </div>
+    <div class="upgrades">
+        <h2>@Model.PossibleUpgrades</h2>
+        <h5>VYLEPŠENIA</h5>
+    </div>
+
+    @using (Html.BeginForm("UpgradeSkill", "Manage", FormMethod.Post))
+    {
+        <div class="power">
+            <h5><b>Sila</b> </h5>
+            <h6>Úroveň: @skillLevels[0]</h6>
+            <button type="submit" name="upgradeSkillButton" class="btn btn-secondary btn-md " + @disable[0] value=0 data-toggle="tooltip" data-placement="bottom" +
+                    title="Vylepšením tejto zručnosti získate viac šípov pre každé herné kolo.">Vylepšiť</button>
+        </div>
+            
+        <div class="visibility">
+            <h5><b>Rozhľad</b> </h5>
+            <h6>Úroveň: @skillLevels[1]</h6>
+            <button type="submit" name="upgradeSkillButton" class="btn btn-secondary btn-md " + @disable[1] value=1 data-toggle="tooltip" data-placement="bottom" +
+                    title="Vylepšením tejto zručnosti získate viac možností pre každé herné kolo.">Vylepšiť</button>
+        </div>
+
+        <div class="stamina">
+            <h5><b>Výdrž</b> </h5>
+            <h6>Úroveň: @skillLevels[2]</h6>
+            <button type="submit" name="upgradeSkillButton" class="btn btn-secondary btn-md " + @disable[2] value=2 data-toggle="tooltip" data-placement="bottom" +
+                    title="Vylepšením tejto zručnosti získate viac času na každé herné kolo.">Vylepšiť</button>
+        </div>
+            
+        <div class="smartness">
+            <h5><b>Bystrosť</b> </h5>
+            <h6>Úroveň: @skillLevels[3]</h6>
+            <button type="submit" name="upgradeSkillButton" class="btn btn-secondary btn-md " + @disable[3] value=3 data-toggle="tooltip" data-placement="bottom" +
+                    title="Vylepšením tejto zručnosti získate body naviac za každé ohodnotenie.">Vylepšiť</button>
+        </div>
+    }
+</div>
+
+    @if (@TempData["Message"] == "Success")
+    {
+        <div class="alert alert-success">
+            <strong>Gratulujem!</strong> Úroveň zručnosti zvýšená.
+        </div>
+
+    }
+    else
+    {
+        if (@TempData["Message"] == "Failed")
+        {
+            <div class="alert alert-success">
+                <strong>Pardon!</strong> Nepodarilo sa zvýśiť úroveň zručnosti.
+            </div>
+        }
+    }
