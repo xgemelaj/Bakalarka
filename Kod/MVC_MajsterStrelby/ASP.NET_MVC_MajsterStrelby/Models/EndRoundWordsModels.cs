@@ -64,9 +64,15 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
                     }
                 }
 
-                //Check if same combination of words was choosen or not and calculate point
-                foreach (DataRow row in dT.Rows)
-                        points[counter] += (Int32.Parse(row[0].ToString()) == -1) ? -1 : 1;
+                if(dT.Rows.Count > 0)
+                {
+                    //Check if same combination of words was choosen or not and calculate point
+                    foreach (DataRow row in dT.Rows)
+                        points[counter] += (Double.Parse(row[0].ToString()) == -0.3) ? -1 : 1;
+                }
+                else
+                    points[counter] = 0;
+                
 
                 //Make value of points based on other player choices and selection priority
                 points[counter] = MakeFinalAmount(points[counter],counter);

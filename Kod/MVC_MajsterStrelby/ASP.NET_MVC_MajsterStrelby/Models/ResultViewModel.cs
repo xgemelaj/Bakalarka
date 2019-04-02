@@ -67,14 +67,14 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
             {
                 //Get sum of all values to calculate correct percentage of each word
                 foreach (DataRow row in dT.Rows)
-                    sum += Double.Parse(row[1].ToString());
+                    sum += Double.Parse(row[2].ToString());
 
                 for(int i=0; i<dT.Rows.Count; i++)
                 {
-                    if(Double.Parse(dT.Rows[i][1].ToString()) > 0)
+                    if(Double.Parse(dT.Rows[i][2].ToString()) > 0)
                     {
                         wordsOrder[i] = dT.Rows[i][0].ToString();
-                        wordsPercentage[i] = Double.Parse(dT.Rows[i][1].ToString()) / sum;
+                        wordsPercentage[i] = Double.Parse(dT.Rows[i][2].ToString()) / sum;
                     }
                 }
             }

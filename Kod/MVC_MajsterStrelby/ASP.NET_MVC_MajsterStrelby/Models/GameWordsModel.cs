@@ -93,8 +93,8 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
                 numberOfPossibleWords += (this._actualPlayer._skills[1] - 1) * 3;
             }
 
+            //Get synset releted to taskword
             string conectionString = ConfigurationManager.ConnectionStrings["DefaultSqlConnection"].ConnectionString;
-            //string querry = "SELECT TOP " + numberOfPossibleWords + " prve_slovo,druhe_slovo FROM synonimicke_vztahy WHERE prve_slovo LIKE @TaskWord OR prve_slovo LIKE @TaskWord ORDER BY NEWID()";
             string querry = "SELECT synset FROM sk_lemmas_synonyms WHERE lemma LIKE @TaskWord";
             DataTable dT = new DataTable();
 
@@ -117,6 +117,32 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
             var countOfWords = (numberOfPossibleWords - 1) > allWords.Count ? allWords.Count : (numberOfPossibleWords - 1);
             for (int i = 0; i < countOfWords; i++)
                 possibleWords.Add(allWords[i]);
+
+            //Add antonyms to possible words
+            querry = "SELECT synset FROM sk_lemmas_antonyms WHERE lemma LIKE @TaskWord";
+
+            dT = new DataTable();
+            using (var connection = new SqlConnection(conectionString))
+            {
+                using (SqlDataAdapter da = new SqlDataAdapter(querry, connection))
+                {
+                    da.SelectCommand.Parameters.AddWithValue("@TaskWord", this._taskWord);
+                    var commandBuilder = new SqlCommandBuilder(da);
+                    da.Fill(dT);
+                }
+            }
+
+            if(dT.Rows.Count>0)
+            {
+                //Get all words to list and shuffle it to random order
+                allWords = dT.Rows[0][0].ToString().Split(',').ToList();
+                allWords = ShuffleList<String>(allWords);
+
+                //We need to be save that we are not at index that doesnt exist / We  want only 1 antonym if exist but check if we can still insert something
+                countOfWords = (numberOfPossibleWords - possibleWords.Count) > 1 ? 1 : (numberOfPossibleWords - possibleWords.Count);
+                for (int i = 0; i < countOfWords; i++)
+                    possibleWords.Add(allWords[i]);
+            }
 
             //If not enough words, get random words from different taskword until we have amount of words which we needed
             while (possibleWords.Count < numberOfPossibleWords)
@@ -144,56 +170,7 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
                     possibleWords.Add(allWords[i]);
             }
 
-
-            //
-            //
-            //OLD WAY
-            //
-            //
-
-            ////Create and fill possible words to list
-            //var possibleWords = new List<string>();
-            //for (int i = 0; i < dT.Rows.Count; i++)
-            //    possibleWords.Add(dT.Rows[i][0].ToString() == this._taskWord ? dT.Rows[i][1].ToString() : dT.Rows[i][0].ToString());
-
-            ////If not enough words, get random words different to taskword form database
-            //if (possibleWords.Count < numberOfPossibleWords)
-            //{
-            //    var amount = numberOfPossibleWords - possibleWords.Count;
-            //    var condition = "(";
-            //    foreach (var item in possibleWords)
-            //    {
-            //        condition += "'" + item + "' ";
-            //        if (possibleWords[possibleWords.Count - 1] != item)
-            //            condition += ", ";
-            //    }
-            //    condition += ")";
-
-            //    dT = new DataTable();
-            //    querry = "SELECT TOP " + 2 * amount + " prve_slovo,druhe_slovo FROM synonimicke_vztahy " +
-            //                "WHERE prve_slovo NOT IN " + condition + " AND druhe_slovo NOT IN " + condition + " ORDER BY NEWID()";
-
-            //    using (var connection = new SqlConnection(conectionString))
-            //    {
-            //        using (SqlDataAdapter da = new SqlDataAdapter(querry, connection))
-            //        {
-            //            da.SelectCommand.Parameters.AddWithValue("@TaskWord", this._taskWord);
-            //            var commandBuilder = new SqlCommandBuilder(da);
-            //            da.Fill(dT);
-            //        }
-            //    }
-
-            //    for (int i = 0; i < dT.Rows.Count; i++)
-            //    {
-            //        if (possibleWords.Count < numberOfPossibleWords && !possibleWords.Contains(dT.Rows[i][0]))
-            //            possibleWords.Add(dT.Rows[i][0].ToString());
-            //        if (possibleWords.Count < numberOfPossibleWords && !possibleWords.Contains(dT.Rows[i][1]))
-            //            possibleWords.Add(dT.Rows[i][1].ToString());
-            //    }
-            //}
-
             //Set possible words to model
-            //this.SetPossibleWords(possibleWords);
             this._possibleWords = possibleWords;
         }
 

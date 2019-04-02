@@ -133,6 +133,9 @@
     var arrowsRemaining = @numberOfShots;   
     var numberOfCharacters = @Model._possibleWords.Count;
 
+    var movementPer = 500;
+    var ticksPerSecond = 1000 / movementPer;
+
     function getCssProperty(elmId, property) {
         var elem = document.getElementById(elmId);
         return window.getComputedStyle(elem, null).getPropertyValue(property);
@@ -145,19 +148,25 @@
             var link = document.getElementById(id);
             var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
             var leftValue = parseFloat(getCssProperty(id, "left"));
-            
-            link.style.left = leftValue + (plusOrMinus * 5) + 'px';
+            link.style.left = leftValue + (plusOrMinus * 5) + 'px'; 
 
-
-            if (secRemaining > 0) {
-                secRemaining -= 1;
-                document.getElementById('remainingSeconds').innerText = secRemaining;
+            //Claculate Ticks to seconds
+            if (ticksPerSecond > 1) {
+                ticksPerSecond--;
             }
             else {
-                sendData();
-                clearInterval(_tick);
+                ticksPerSecond = 1000 / movementPer;
+                //Timer
+                if (secRemaining > 0) {
+                    secRemaining -= 1;
+                    document.getElementById('remainingSeconds').innerText = secRemaining;
+                }
+                else {
+                    sendData();
+                    clearInterval(_tick);
+                }
             }
-        }, 1000);
+        }, movementPer);
     }
 
     function hideInstruction() {
