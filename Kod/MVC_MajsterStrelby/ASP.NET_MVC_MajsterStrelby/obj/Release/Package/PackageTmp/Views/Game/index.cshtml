@@ -119,7 +119,7 @@
 
     <div id="jumbotron-info" class="jumbotron jumbotron-info">
         <h1>Inštrukcie</h1>
-        <p>Tvojou úlohou je strieľať na slová ktoré zvieratka držia. Pre zisk čo najväčšieho množstva bodov je dôležité vyberať slová od najväčšieho synonymického vzťahu k zadanému slovuv hornej časti.</p>
+        <p>Tvojou úlohou je strieľať na slová ktoré zvieratka držia. Pre zisk čo najväčšieho množstva bodov je dôležité vyberať slová od najväčšieho synonymického vzťahu k zadanému slovu v hornej časti. Vyberaj slova pozorne pretože po vybratí slova sa už nedá výber zrušiť!</p>
         <p><a class="btn btn-secondary btn-lg" onclick="return hideInstruction.call(this);">Začať hru</a></p>
     </div>
 
@@ -133,6 +133,9 @@
     var arrowsRemaining = @numberOfShots;   
     var numberOfCharacters = @Model._possibleWords.Count;
 
+    var movementPer = 500;
+    var ticksPerSecond = 1000 / movementPer;
+
     function getCssProperty(elmId, property) {
         var elem = document.getElementById(elmId);
         return window.getComputedStyle(elem, null).getPropertyValue(property);
@@ -145,19 +148,25 @@
             var link = document.getElementById(id);
             var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
             var leftValue = parseFloat(getCssProperty(id, "left"));
-            
-            link.style.left = leftValue + (plusOrMinus * 5) + 'px';
+            link.style.left = leftValue + (plusOrMinus * 5) + 'px'; 
 
-
-            if (secRemaining > 0) {
-                secRemaining -= 1;
-                document.getElementById('remainingSeconds').innerText = secRemaining;
+            //Claculate Ticks to seconds
+            if (ticksPerSecond > 1) {
+                ticksPerSecond--;
             }
             else {
-                sendData();
-                clearInterval(_tick);
+                ticksPerSecond = 1000 / movementPer;
+                //Timer
+                if (secRemaining > 0) {
+                    secRemaining -= 1;
+                    document.getElementById('remainingSeconds').innerText = secRemaining;
+                }
+                else {
+                    sendData();
+                    clearInterval(_tick);
+                }
             }
-        }, 1000);
+        }, movementPer);
     }
 
     function hideInstruction() {

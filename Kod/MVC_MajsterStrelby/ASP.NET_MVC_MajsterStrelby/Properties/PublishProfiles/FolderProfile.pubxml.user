@@ -16,10 +16,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/11/2019 18:07:54</publishTime>
     </File>
     <File Include="bin/ASP.NET_MVC_MajsterStrelby.dll">
-      <publishTime>03/27/2019 00:45:27</publishTime>
+      <publishTime>04/09/2019 00:54:17</publishTime>
     </File>
     <File Include="bin/ASP.NET_MVC_MajsterStrelby.pdb">
-      <publishTime>03/27/2019 00:45:27</publishTime>
+      <publishTime>04/09/2019 00:54:17</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>03/11/2019 18:07:54</publishTime>
@@ -538,10 +538,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/11/2019 18:07:53</publishTime>
     </File>
     <File Include="Views/Game/index.cshtml">
-      <publishTime>03/27/2019 00:37:29</publishTime>
+      <publishTime>02/04/2019 17:26:17</publishTime>
     </File>
     <File Include="Views/Game/Result.cshtml">
-      <publishTime>03/26/2019 22:06:19</publishTime>
+      <publishTime>02/04/2019 19:03:58</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>03/11/2019 22:37:59</publishTime>
@@ -592,7 +592,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/11/2019 18:07:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>03/27/2019 00:45:29</publishTime>
+      <publishTime>04/08/2019 19:23:09</publishTime>
     </File>
   </ItemGroup>
 </Project>
