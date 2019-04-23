@@ -1,0 +1,9 @@
+POCET OHODNOTENI PRE JEDNNOTLIVE SLOVA
+--------------------------------------------------------------
+SELECT lemma,COUNT(zo.id) as pocet FROM sk_lemmas_synonyms
+JOIN zbieranie_ohodnoteni zo
+ON lemma=zo.prve_slovo
+WHERE pos LIKE 'A'
+GROUP BY lemma
+ORDER BY pocet ASC
+

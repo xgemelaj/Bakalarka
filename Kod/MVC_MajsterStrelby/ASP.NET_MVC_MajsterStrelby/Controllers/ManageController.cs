@@ -136,6 +136,17 @@ namespace ASP.NET_MVC_MajsterStrelby.Controllers
         }
 
         //
+        // GET: /Manage/CreateVocabulary
+        public ActionResult CreateVocabulary()
+        {
+            //Create vocabulary
+            Vocabulary vocabulary = new Vocabulary();
+            vocabulary.CreateVocabulary();
+
+            return RedirectToAction("Index");
+        }
+
+        //
         // POST: /Manage/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]

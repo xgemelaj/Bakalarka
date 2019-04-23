@@ -187,6 +187,7 @@
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\EndRoundWordsModels.cs" />
     <Compile Include="Models\ResultViewModel.cs" />
+    <Compile Include="Models\Vocabulary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Models\PlayersViewModel.cs" />
