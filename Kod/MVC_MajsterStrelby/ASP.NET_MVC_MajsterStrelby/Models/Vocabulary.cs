@@ -16,6 +16,9 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
             string conectionString = ConfigurationManager.ConnectionStrings["DefaultSqlConnection"].ConnectionString;
             var querry = "SELECT prve_slovo, druhe_slovo, COUNT(druhe_slovo) as amount, SUM(vzdialenost) * 1.0 / COUNT(druhe_slovo) * 1.0 as coefficient " +
                             "FROM zbieranie_ohodnoteni " +
+                            "JOIN sk_lemmas_synonyms sls " +
+                            "ON prve_slovo = sls.lemma " +
+                            "WHERE sls.pos LIKE 'A' " +
                             "GROUP BY prve_slovo, druhe_slovo " +
                             "HAVING SUM(vzdialenost) > 0 " +
                             "ORDER BY prve_slovo ASC, coefficient DESC, amount ASC";
