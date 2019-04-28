@@ -27,3 +27,16 @@ WHERE sls.pos LIKE 'A'
 GROUP BY prve_slovo, druhe_slovo
 HAVING SUM(vzdialenost) > 0
 ORDER BY prve_slovo ASC, coefficient DESC, amount ASC
+
+
+VYHODNOCOVANIE 
+----------------
+
+Pocet ohodnoteni pre jednotlive slova
+-----------------------------------
+SELECT prve_slovo, COUNT(prve_slovo), sls.pos FROM zbieranie_ohodnoteni
+LEFT JOIN sk_lemmas_synonyms sls
+ON prve_slovo = sls.lemma
+WHERE id_hrac != 1016 AND id_hrac != 1027
+GROUP BY prve_slovo, sls.pos
+ORDER BY pos
