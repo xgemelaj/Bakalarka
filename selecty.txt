@@ -29,6 +29,18 @@ HAVING SUM(vzdialenost) > 0
 ORDER BY prve_slovo ASC, coefficient DESC, amount ASC
 
 
+VYTVORENIE SLOVNIKA AJ S NORMALIZACIOU HODNOT PRE NEJAKE SLOVO
+----------------------------------------
+SELECT prve_slovo, druhe_slovo, COUNT(druhe_slovo) as amount, ((SUM(vzdialenost) * 1.0 / COUNT(druhe_slovo) * 1.0) + 0.3) / 3.5 as coefficient
+FROM zbieranie_ohodnoteni
+JOIN sk_lemmas_synonyms sls
+ON prve_slovo = sls.lemma
+WHERE sls.pos LIKE 'A' AND prve_slovo LIKE 'aktuálny'
+GROUP BY prve_slovo, druhe_slovo
+HAVING COUNT(druhe_slovo) > 1
+ORDER BY prve_slovo ASC, coefficient DESC, amount ASC
+
+
 VYHODNOCOVANIE 
 ----------------
 
@@ -40,3 +52,15 @@ ON prve_slovo = sls.lemma
 WHERE id_hrac != 1016 AND id_hrac != 1027
 GROUP BY prve_slovo, sls.pos
 ORDER BY pos
+
+
+Koeficienty
+-------------------------------------
+SELECT prve_slovo, druhe_slovo, COUNT(druhe_slovo) as amount, SUM(vzdialenost) * 1.0 / COUNT(druhe_slovo) * 1.0 as coefficient
+FROM zbieranie_ohodnoteni
+JOIN sk_lemmas_synonyms sls
+ON prve_slovo = sls.lemma
+WHERE sls.pos LIKE 'A'
+GROUP BY prve_slovo, druhe_slovo
+HAVING COUNT(druhe_slovo) > 1
+ORDER BY prve_slovo ASC, coefficient DESC, amount ASC

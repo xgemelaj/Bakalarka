@@ -20,7 +20,7 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
                             "ON prve_slovo = sls.lemma " +
                             "WHERE sls.pos LIKE 'A' " +
                             "GROUP BY prve_slovo, druhe_slovo " +
-                            "HAVING SUM(vzdialenost) > 0 " +
+                            "HAVING COUNT(druhe_slovo) > 1 " +
                             "ORDER BY prve_slovo ASC, coefficient DESC, amount ASC";
 
             DataTable dT = new DataTable();
@@ -45,6 +45,7 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
             using (var tw = new StreamWriter(path, true))
             {
                 string firstWord = null;
+                int counter = 0;
                 foreach(DataRow dr in dT.Rows)
                 {
                     if(dr[0].ToString() != firstWord)
@@ -54,9 +55,12 @@ namespace ASP.NET_MVC_MajsterStrelby.Models
 
                         firstWord = dr[0].ToString();
                         tw.Write(firstWord + " -  ");
+                        counter = 0;
                     }
 
-                    tw.Write(dr[1].ToString() + ", ");
+                    if(counter<4)
+                        tw.Write(dr[1].ToString() + ", ");
+                    counter++;
                 }
             }
         }
