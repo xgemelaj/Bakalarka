@@ -1,0 +1,86 @@
+﻿@model ASP.NET_MVC_MajsterStrelby.Models.ResultViewModel
+@{
+    ViewBag.Title = "Result";
+    var orderedWords = Model._orderedWords;
+    var wordsPercentage = Model._wordsPercentage;
+}
+
+<div class="jumbotron result">
+    <h3 class="text-center">Získal si</h3>
+    <h1 class="text-center">@Model._finalPoints bodov</h1>
+    <h5 class="text-center">Momentálne štatistiky pre začiatočné slovo <b>@Model._taskWord</b></h5class="text-center">
+
+    <div class="container chart_result">
+        <div id="div_chart">
+            <canvas id="chart"></canvas>
+        </div>
+    </div>
+    @Html.ActionLink("Chceš hrať ďalšie kolo?", "Index", "Game")
+</div>
+
+
+
+@if (@TempData["Message"] != "")
+{
+    if (@TempData["Message"] == "A" || @TempData["Message"] == "V")
+    {
+        <div class="alert alert-success">
+            <strong>Gratulujem, získal si nový úspech!</strong> Získal si nový úspech! Viac v profile.
+        </div>
+    }
+
+    if (@TempData["Message"] == "S" || @TempData["Message"] == "V")
+    {
+        <div class="alert alert-success">
+            <strong>Je možnosť zvýšiť zručnosť!</strong> Viac v profile.
+        </div>
+    }
+
+}
+
+<script>
+    var model = @Html.Raw(Json.Encode(Model));
+    var orderedWords = model._orderedWords;
+    var wordsPercentage = model._wordsPercentage;
+
+    var ctx = document.getElementById("chart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: orderedWords,
+            datasets: [{
+                //label: '# of Votes',
+                data: wordsPercentage,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(153, 102, 255, 0.7)',
+                    'rgba(255, 159, 64, 0.7)',
+                    'rgba(185, 156, 109, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(153, 102, 255, 0.7)',
+                    'rgba(255, 159, 64, 0.7)',
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(153, 102, 255, 0.7)',
+                    'rgba(255, 159, 64, 0.7)'
+                ],
+                borderColor: 'rgba(0, 0, 0,0.8)',
+            }]
+        },
+        options: {
+            tooltips: {
+                enabled: false
+            },
+            animation: {
+                animateScale: true
+            }
+        },
+    });
+</script>

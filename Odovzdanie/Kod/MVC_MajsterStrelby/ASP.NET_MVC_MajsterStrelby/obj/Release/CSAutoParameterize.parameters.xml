@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="DefaultConnection2-Web.config Connection String" description="DefaultConnection2 Connection String used in web.config by the application to access the database." defaultValue="Data Source=LAPTOP-QTGC0BUA\SERVERSQL;Initial Catalog=aspnet-ASP.NET_MVC_MajsterStrelby-20190206033406;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\School\\Bakalarka\\Kod\\MVC_MajsterStrelby\\ASP\.NET_MVC_MajsterStrelby\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection2']/@connectionString" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\aspnet-ASP.NET_MVC_MajsterStrelby-20190206033406.mdf;Initial Catalog=aspnet-ASP.NET_MVC_MajsterStrelby-20190206033406;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\School\\Bakalarka\\Kod\\MVC_MajsterStrelby\\ASP\.NET_MVC_MajsterStrelby\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="DefaultSqlConnection-Web.config Connection String" description="DefaultSqlConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=LAPTOP-QTGC0BUA\SERVERSQL;Initial Catalog=MajsterStrelby;User ID=sa;Password=serversql;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\School\\Bakalarka\\Kod\\MVC_MajsterStrelby\\ASP\.NET_MVC_MajsterStrelby\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultSqlConnection']/@connectionString" />
+  </parameter>
+</parameters>
